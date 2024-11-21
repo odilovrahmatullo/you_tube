@@ -8,6 +8,8 @@ import lombok.Setter;
 import you_tube.Profile.enums.ProfileRole;
 import you_tube.Profile.enums.ProfileStatus;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,5 +36,9 @@ public class ProfileEntity {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ProfileStatus status;
+    @Column(name = "visible")
+    private Boolean visible;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 
 }
