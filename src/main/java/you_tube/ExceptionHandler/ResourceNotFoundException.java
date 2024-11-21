@@ -1,4 +1,4 @@
-package you_tube.exceptions;
+package you_tube.ExceptionHandler;
 
 public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message) {
