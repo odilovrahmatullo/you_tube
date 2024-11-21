@@ -28,7 +28,7 @@ public class ProfileDTO {
     private String email;
     @NotBlank(message = "Password not found")
     private String password;
-//    private AttachEntity photo;
+    private String photo;
     private ProfileStatus status;
     private ProfileRole role;
     private String JwtToken;
