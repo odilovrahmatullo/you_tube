@@ -1,14 +1,12 @@
-package you_tube.you_tube.Profile.entity;
+package you_tube.Profile.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import you_tube.you_tube.Profile.enums.ProfileRole;
-import you_tube.you_tube.Profile.enums.ProfileStatus;
-
-import javax.print.attribute.standard.MediaSize;
+import you_tube.Profile.enums.ProfileRole;
+import you_tube.Profile.enums.ProfileStatus;
 
 @Getter
 @Setter

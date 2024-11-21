@@ -1,8 +1,8 @@
-package you_tube.you_tube.Profile.repository;
+package you_tube.Profile.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import you_tube.you_tube.Profile.entity.ProfileEntity;
+import you_tube.Profile.entity.ProfileEntity;
 
 @Repository
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer> {

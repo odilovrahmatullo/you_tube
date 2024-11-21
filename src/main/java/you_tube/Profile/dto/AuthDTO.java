@@ -1,4 +1,4 @@
-package you_tube.you_tube.Profile.dto;
+package you_tube.Profile.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

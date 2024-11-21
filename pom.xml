@@ -76,7 +76,7 @@
 			<artifactId>flyway-database-postgresql</artifactId>
 			<version>10.21.0</version>
 			<scope>runtime</scope>
-=======
+		</dependency>
 <!--		Email-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

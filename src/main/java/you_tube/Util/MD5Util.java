@@ -1,4 +1,4 @@
-package you_tube.you_tube.Util;
+package you_tube.Util;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

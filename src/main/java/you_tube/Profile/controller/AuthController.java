@@ -1,14 +1,14 @@
-package you_tube.you_tube.Profile.controller;
+package you_tube.Profile.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import you_tube.you_tube.ExceptionHandler.AppBadException;
-import you_tube.you_tube.Profile.dto.AuthDTO;
-import you_tube.you_tube.Profile.dto.ProfileDTO;
-import you_tube.you_tube.Profile.dto.RegistrationDTO;
-import you_tube.you_tube.Profile.service.AuthService;
+import you_tube.ExceptionHandler.AppBadException;
+import you_tube.Profile.dto.AuthDTO;
+import you_tube.Profile.dto.ProfileDTO;
+import you_tube.Profile.dto.RegistrationDTO;
+import you_tube.Profile.service.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")

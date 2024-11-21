@@ -1,11 +1,11 @@
-package you_tube.you_tube.Util;
+package you_tube.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import you_tube.you_tube.Profile.dto.JwtDTO;
+import you_tube.Profile.dto.JwtDTO;
 
 import java.security.Key;
 import java.util.Date;
