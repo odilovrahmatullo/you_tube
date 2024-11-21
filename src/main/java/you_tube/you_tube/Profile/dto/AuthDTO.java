@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthDTO {
-    @NotBlank(message = "Username  not blank")
-    private String username;
+    @NotBlank(message = "email  not blank")
+    private String email;
     @NotBlank(message = "Password not blank")
     private String password;
 }
