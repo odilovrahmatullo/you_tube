@@ -1,4 +1,4 @@
-package you_tube.you_tube;
+package you_tube;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

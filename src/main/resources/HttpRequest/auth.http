@@ -1,0 +1,19 @@
+###  Auth
+POST localhost:8080/api/auth/registration
+Content-Type: application/json
+
+{
+  "name": "Mexriddin",
+  "surname": "Zaxriddinov",
+  "password": "123456",
+  "email": "Zaxriddinov1707@gmail.com"
+}
+
+### Login
+POST localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "Zaxriddinov1707@gmail.com",
+  "password": "123456"
+}
