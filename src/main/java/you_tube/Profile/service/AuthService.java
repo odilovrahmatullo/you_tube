@@ -47,7 +47,7 @@ public class AuthService {
         profileEntity.setName(registration.getName());
         profileEntity.setSurname(registration.getSurname());
         profileEntity.setPassword(MD5Util.md5(registration.getPassword()));
-        profileEntity.setRole(ProfileRole.USER);
+        profileEntity.setRole(ProfileRole.ROLE_USER);
         profileEntity.setStatus(ProfileStatus.IN_REGISTRATION);
         profileRepository.save(profileEntity);
         return profileEntity;
