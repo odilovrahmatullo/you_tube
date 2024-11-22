@@ -1,4 +1,4 @@
-package you_tube.exp;
+package you_tube.ExceptionHandler;
 
 public class AppBadRequest extends RuntimeException {
     public AppBadRequest(String message) {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import you_tube.you_tube.Profile.entity.ProfileEntity;
+import you_tube.Profile.entity.ProfileEntity;
 
 import java.util.Optional;
 
