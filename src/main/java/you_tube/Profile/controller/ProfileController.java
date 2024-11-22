@@ -25,7 +25,7 @@ public class ProfileController {
                                                  @RequestHeader("Authorization") String token) {
         System.out.println(token);
         JwtDTO dto = JwtUtil.decode(token.substring(7));
-        if (dto.getRole().equals(ProfileRole.ADMIN)) {
+        if (dto.getRole().equals(ProfileRole.ROLE_ADMIN)) {
             return ResponseEntity.status(201).body(profileService.create(requestDTO));
         } else {
             return ResponseEntity.status(403).build();
