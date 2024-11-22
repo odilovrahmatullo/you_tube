@@ -7,7 +7,7 @@ import you_tube.History.service.EmailSendingService;
 import you_tube.Profile.dto.AuthDTO;
 import you_tube.Profile.dto.ProfileDTO;
 import you_tube.Profile.dto.RegistrationDTO;
-import you_tube.Profile.entity.ProfileEntity;
+import you_tube.you_tube.Profile.entity.ProfileEntity;
 import you_tube.Profile.enums.ProfileRole;
 import you_tube.Profile.enums.ProfileStatus;
 import you_tube.Profile.repository.ProfileRepository;
