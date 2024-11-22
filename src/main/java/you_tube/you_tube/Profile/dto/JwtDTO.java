@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JwtDTO {
-    private String username;
+    private String email;
     private String role;
     private String type;
 }

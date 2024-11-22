@@ -53,11 +53,11 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
 
-        String username = claims.getSubject();
+        String email = claims.getSubject();
         String role = claims.containsKey("role") ? (String) claims.get("role") : null;
         String type = (String) claims.get("type"); // token turi (access yoki refresh)
 
-        return new JwtDTO(username, role, type);
+        return new JwtDTO(email, role, type);
     }
 
 
