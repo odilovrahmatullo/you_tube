@@ -1,4 +1,4 @@
-package you_tube.you_tube.Profile.repository;
+package you_tube.Profile.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -5,11 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import you_tube.you_tube.Profile.enums.ProfileRole;
-import you_tube.you_tube.Profile.enums.ProfileStatus;
+import you_tube.Profile.enums.ProfileRole;
+import you_tube.Profile.enums.ProfileStatus;
 
-import javax.print.attribute.standard.MediaSize;
+
 import java.time.LocalDateTime;
 
 @Getter
