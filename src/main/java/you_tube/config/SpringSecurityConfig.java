@@ -43,13 +43,15 @@ public class SpringSecurityConfig {
         // Ya'ni foydalanuvchi murojat qilayotgan API-larni ishlatishga ruxsati bor yoki yo'qligini tekshirishdir.
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
+                    .requestMatchers("/api/auth/login").permitAll()
+                    .requestMatchers("attach/**").permitAll()
                     .anyRequest()
                     .authenticated();
         });
         http.httpBasic(Customizer.withDefaults());
 
-        http.csrf(AbstractHttpConfigurer :: disable); // csrf yoqilgan
-        http.cors(AbstractHttpConfigurer :: disable); // cors yoqilgan
+        http.csrf(AbstractHttpConfigurer :: disable); // csrf ochirilgan
+        http.cors(AbstractHttpConfigurer :: disable); // cors ochirilgan
 
         return http.build();
     }
