@@ -9,4 +9,5 @@ public class PlaylistVideoDTO {
     private Integer playlistId;
     private String videoId;
     private Integer orderNumber;
+    private Boolean visible;
 }
