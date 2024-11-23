@@ -19,4 +19,8 @@ public interface PlaylistRepository extends JpaRepository<PlayListEntity, Intege
     @Query("UPDATE PlayListEntity p SET p.status = ?2 WHERE p.id = ?1")
     int updateStatus(Integer id, PlaylistStatus status);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE PlayListEntity p SET p.visible = false WHERE p.id = ?1")
+    int deletedVisible(Integer id);
 }

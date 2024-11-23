@@ -10,6 +10,7 @@ import you_tube.PlayList.enums.PlaylistStatus;
 import you_tube.PlayList.repository.PlaylistRepository;
 import you_tube.Profile.enums.ProfileStatus;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,8 @@ public class PlaylistService {
         playlistEntity.setDescription(dto.getDescription());
         playlistEntity.setStatus(dto.getStatus());
         playlistEntity.setOrderNum(dto.getOrderNum());
+        playlistEntity.setVisible(Boolean.TRUE);
+        playlistEntity.setCreatedDate(LocalDate.now());
         playlistRepository.save(playlistEntity);
         dto.setId(playlistEntity.getId());
         return dto;
@@ -67,6 +70,14 @@ public class PlaylistService {
             dto1.setChannel_id(playListEntity.getChannel_id());
             dto1.setStatus(playListEntity.getStatus());
             return dto1;
+        }
+        throw new AppBadException("Does such a playlist exist?");
+    }
+
+    public Boolean deleted(Integer id) {
+        int i = playlistRepository.deletedVisible(id);
+        if (i == 1) {
+            return true;
         }
         throw new AppBadException("Does such a playlist exist?");
     }

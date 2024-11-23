@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import you_tube.PlayList.enums.PlaylistStatus;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,4 +30,7 @@ public class PlayListEntity {
     private PlaylistStatus status;
     @Column(name = "order_num")
     private Integer orderNum;
+    private Boolean visible;
+    @Column(name = "created_date")
+    private LocalDate createdDate;
 }
