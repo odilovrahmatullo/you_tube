@@ -1,4 +1,4 @@
-package you_tube.you_tube.Profile.entity;
+package you_tube.Profile.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

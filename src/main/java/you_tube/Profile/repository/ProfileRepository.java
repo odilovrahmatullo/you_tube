@@ -7,13 +7,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import you_tube.you_tube.Profile.entity.ProfileEntity;
+import you_tube.Profile.entity.ProfileEntity;
 
 import java.util.Optional;
 
 @Repository
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer> {
 
+    @Query("from ProfileEntity where email = ?1 and visible = true ")
     ProfileEntity findByEmail(String email);
 
     @Query("FROM ProfileEntity p WHERE p.visible  = true ")

@@ -7,7 +7,7 @@ import you_tube.History.service.EmailSendingService;
 import you_tube.Profile.dto.AuthDTO;
 import you_tube.Profile.dto.ProfileDTO;
 import you_tube.Profile.dto.RegistrationDTO;
-import you_tube.you_tube.Profile.entity.ProfileEntity;
+import you_tube.Profile.entity.ProfileEntity;
 import you_tube.Profile.enums.ProfileRole;
 import you_tube.Profile.enums.ProfileStatus;
 import you_tube.Profile.repository.ProfileRepository;
@@ -47,7 +47,7 @@ public class AuthService {
         profileEntity.setName(registration.getName());
         profileEntity.setSurname(registration.getSurname());
         profileEntity.setPassword(MD5Util.md5(registration.getPassword()));
-        profileEntity.setRole(ProfileRole.USER);
+        profileEntity.setRole(ProfileRole.ROLE_USER);
         profileEntity.setStatus(ProfileStatus.IN_REGISTRATION);
         profileRepository.save(profileEntity);
         return profileEntity;

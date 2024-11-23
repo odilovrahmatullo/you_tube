@@ -10,7 +10,7 @@ import you_tube.Profile.dto.ProfileDTO;
 import you_tube.Profile.enums.ProfileStatus;
 import you_tube.Util.JwtUtil;
 import you_tube.Profile.dto.UpdateProfileDTO;
-import you_tube.you_tube.Profile.entity.ProfileEntity;
+import you_tube.Profile.entity.ProfileEntity;
 import you_tube.Profile.repository.ProfileRepository;
 
 
