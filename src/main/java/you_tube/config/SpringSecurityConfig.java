@@ -39,6 +39,8 @@ public class SpringSecurityConfig {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/api/auth/login").permitAll()
                     .requestMatchers("attach/**").permitAll()
+                    .requestMatchers("/channel").permitAll()
+                    .requestMatchers("/channel/update/**").permitAll()
                     .anyRequest()
                     .authenticated();
         });
