@@ -1,6 +1,6 @@
 package you_tube.category.controller;
 
-import you_tube.ExceptionHandler.AppBadException;
+import you_tube.exceptionHandler.AppBadException;
 import you_tube.category.dto.CategoryDTO;
 import you_tube.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

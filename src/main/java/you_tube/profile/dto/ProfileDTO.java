@@ -1,4 +1,4 @@
-package you_tube.Profile.dto;
+package you_tube.profile.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import you_tube.Profile.enums.ProfileRole;
-import you_tube.Profile.enums.ProfileStatus;
+import you_tube.profile.enums.ProfileRole;
+import you_tube.profile.enums.ProfileStatus;
 
 
 @Getter

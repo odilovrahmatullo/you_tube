@@ -1,8 +1,8 @@
-package you_tube.Profile.dto;
+package you_tube.profile.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import you_tube.Profile.enums.ProfileRole;
+import you_tube.profile.enums.ProfileRole;
 
 @Getter
 @Setter

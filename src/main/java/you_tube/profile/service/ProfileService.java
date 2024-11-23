@@ -1,17 +1,17 @@
-package you_tube.Profile.service;
+package you_tube.profile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import you_tube.ExceptionHandler.AppBadException;
-import you_tube.History.service.EmailSendingService;
-import you_tube.Profile.dto.CreateProfile;
-import you_tube.Profile.dto.JwtDTO;
-import you_tube.Profile.dto.ProfileDTO;
-import you_tube.Profile.enums.ProfileStatus;
-import you_tube.Util.JwtUtil;
-import you_tube.Profile.dto.UpdateProfileDTO;
-import you_tube.Profile.entity.ProfileEntity;
-import you_tube.Profile.repository.ProfileRepository;
+import you_tube.exceptionHandler.AppBadException;
+import you_tube.history.service.EmailSendingService;
+import you_tube.profile.dto.CreateProfile;
+import you_tube.profile.dto.JwtDTO;
+import you_tube.profile.dto.ProfileDTO;
+import you_tube.profile.enums.ProfileStatus;
+import you_tube.utils.JwtUtil;
+import you_tube.profile.dto.UpdateProfileDTO;
+import you_tube.profile.entity.ProfileEntity;
+import you_tube.profile.repository.ProfileRepository;
 
 
 import java.util.Optional;

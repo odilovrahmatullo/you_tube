@@ -1,4 +1,4 @@
-package you_tube.Profile.repository;
+package you_tube.profile.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import you_tube.Profile.entity.ProfileEntity;
+import you_tube.profile.entity.ProfileEntity;
 
 import java.util.Optional;
 

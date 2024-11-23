@@ -1,4 +1,4 @@
-package you_tube.History.service;
+package you_tube.history.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

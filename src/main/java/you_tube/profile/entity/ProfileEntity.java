@@ -1,12 +1,13 @@
-package you_tube.Profile.entity;
+package you_tube.profile.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import you_tube.Profile.enums.ProfileRole;
-import you_tube.Profile.enums.ProfileStatus;
+import you_tube.channel.ChannelEntity;
+import you_tube.profile.enums.ProfileRole;
+import you_tube.profile.enums.ProfileStatus;
 
 
 import java.time.LocalDateTime;

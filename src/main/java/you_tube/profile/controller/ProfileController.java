@@ -1,18 +1,18 @@
-package you_tube.Profile.controller;
+package you_tube.profile.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import you_tube.ExceptionHandler.AppBadException;
-import you_tube.Profile.dto.CreateProfile;
-import you_tube.Profile.dto.JwtDTO;
-import you_tube.Profile.dto.ProfileDTO;
-import you_tube.Profile.dto.UpdateProfileDTO;
-import you_tube.Profile.enums.ProfileRole;
-import you_tube.Profile.service.ProfileService;
-import you_tube.Util.JwtUtil;
+import you_tube.exceptionHandler.AppBadException;
+import you_tube.profile.dto.CreateProfile;
+import you_tube.profile.dto.JwtDTO;
+import you_tube.profile.dto.ProfileDTO;
+import you_tube.profile.dto.UpdateProfileDTO;
+import you_tube.profile.enums.ProfileRole;
+import you_tube.profile.service.ProfileService;
+import you_tube.utils.JwtUtil;
 
 @RestController
 @RequestMapping("/api/profile")

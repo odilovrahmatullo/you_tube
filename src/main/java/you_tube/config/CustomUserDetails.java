@@ -3,9 +3,9 @@ package you_tube.config;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import you_tube.Profile.entity.ProfileEntity;
-import you_tube.Profile.enums.ProfileRole;
-import you_tube.Profile.enums.ProfileStatus;
+import you_tube.profile.entity.ProfileEntity;
+import you_tube.profile.enums.ProfileRole;
+import you_tube.profile.enums.ProfileStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

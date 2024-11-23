@@ -1,4 +1,4 @@
-package you_tube.Profile.dto;
+package you_tube.profile.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
