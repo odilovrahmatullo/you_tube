@@ -1,0 +1,9 @@
+###
+POST localhost:8080/api/profile/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoicmVmcmVzaCIsInN1YiI6IlpheHJpZGRpbm92MTcwN0BnbWFpbC5jb20iLCJpYXQiOjE3MzIzNTMxODUsImV4cCI6MTczMDY1MDIxOH0.Pe3CexkMuoscEx366IcRf4WxB7U4rbgIPr1KyjCdqX8
+Content-Type: application/json
+
+{
+  "role": "ROLE_ADMIN",
+  "email": "vsrrs.gsg"
+}
