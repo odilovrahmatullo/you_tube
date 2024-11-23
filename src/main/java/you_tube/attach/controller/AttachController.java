@@ -1,7 +1,6 @@
 package you_tube.attach.controller;
 
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -9,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import you_tube.Profile.dto.JwtDTO;
-import you_tube.Profile.enums.ProfileRole;
-import you_tube.Profile.service.ProfileService;
-import you_tube.Util.JwtUtil;
+import you_tube.profile.dto.JwtDTO;
+import you_tube.profile.enums.ProfileRole;
+import you_tube.profile.service.ProfileService;
+import you_tube.utils.JwtUtil;
 import you_tube.attach.dtos.AttachDTO;
 import you_tube.attach.service.AttachService;
 import you_tube.enums.AppLanguage;
