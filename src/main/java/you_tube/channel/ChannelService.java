@@ -1,6 +1,7 @@
 package you_tube.channel;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import you_tube.profile.service.ProfileService;
@@ -14,7 +15,7 @@ public class ChannelService {
     @Autowired
     private ProfileService profileService;
 
-    public ChannelDTO create(@Valid ChannelDTO dto, String email) {
+    public ChannelDTO create(ChannelDTO dto, String email) {
         ChannelEntity entity = new ChannelEntity();
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
@@ -41,5 +42,16 @@ public class ChannelService {
     }
 
 
+    public Boolean updatePhoto(String id, String photoId) {
+        return channelRepository.updatePhoto(id,photoId)==1;
+    }
+
+    public Boolean updateBanner(String id, String photoId) {
+        return channelRepository.updateBanner(id,photoId)==1;
+    }
+
+    public Boolean updateInfo(String id, UpdateChannelDTO dto) {
+        return channelRepository.updateInfo(id,dto.getName(),dto.getDescription())==1;
+    }
 
 }

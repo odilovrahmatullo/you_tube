@@ -1,1 +1,30 @@
 ### Create channel (RoleUser)
+POST localhost:8080/channel
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzIzNjY4OTEsImV4cCI6MTczMjQ1MzI5MX0.JkqjXnTL6uDAQjXIHkD30Vnnlz6xn_gHEFxOWpIe6CI
+
+{
+  "name": "odilovsblog",
+  "description": "zo'r kanal bu qoling chiqib ketmang",
+  "bannerId": "35950f14-a106-42a2-a32b-a9618b8da610.jpg",
+  "photoId": "35950f14-a106-42a2-a32b-a9618b8da610.jpg"
+
+}
+
+### Update photo of chanel
+PUT localhost:8080/channel/update/photo/c1aafcbd-4f5a-4386-88ce-c640bee187af?photoId=9745f793-c6ca-4349-ba71-d2e37d699848.jpg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzIzNjY4OTEsImV4cCI6MTczMjQ1MzI5MX0.JkqjXnTL6uDAQjXIHkD30Vnnlz6xn_gHEFxOWpIe6CI
+
+### Update banner of chanel
+PUT localhost:8080/channel/update/banner/c1aafcbd-4f5a-4386-88ce-c640bee187af?bannerId=9745f793-c6ca-4349-ba71-d2e37d699848.jpg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzIzNjY4OTEsImV4cCI6MTczMjQ1MzI5MX0.JkqjXnTL6uDAQjXIHkD30Vnnlz6xn_gHEFxOWpIe6CI
+
+### Update info of chanel
+PUT localhost:8080/channel/update/chanel-info/c1aafcbd-4f5a-4386-88ce-c640bee187af
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzIzNjY4OTEsImV4cCI6MTczMjQ1MzI5MX0.JkqjXnTL6uDAQjXIHkD30Vnnlz6xn_gHEFxOWpIe6CI
+
+{
+  "name": "rahmatullosblog",
+  "description": "zo'r bola"
+}

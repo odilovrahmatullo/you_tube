@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS profile (
                          email VARCHAR(255) UNIQUE,
                          password VARCHAR(255),
                          photo VARCHAR(255),
-                         role VARCHAR(255) CHECK (role IN ('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_PUBLISHER', 'ROLE_USER')),
+                         role VARCHAR(255) CHECK (role IN ('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_PUBLISHER', 'ROLE_USER', 'ROLE_OWNER')),
                          status VARCHAR(255) CHECK (status IN ('ACTIVE','INACTIVE','DELETED','IN_REGISTRATION','REGISTERED')),
                          visible BOOLEAN,
                          created_date TIMESTAMP
