@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import you_tube.Util.MD5Util;
+import you_tube.utils.MD5Util;
 
 import java.util.UUID;
 
@@ -38,7 +38,6 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/api/auth/login").permitAll()
-                    .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("attach/**").permitAll()
                     .anyRequest()
                     .authenticated();

@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import you_tube.attach.dtos.AttachDTO;
 import you_tube.attach.entity.AttachEntity;
 import you_tube.attach.repository.AttachRepository;
-import you_tube.ExceptionHandler.ResourceNotFoundException;
+import you_tube.exceptionHandler.ResourceNotFoundException;
 
 
 import java.io.File;
