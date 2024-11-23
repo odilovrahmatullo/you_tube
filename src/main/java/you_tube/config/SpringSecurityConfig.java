@@ -1,6 +1,7 @@
 package you_tube.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,31 +10,24 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import you_tube.Util.MD5Util;
 
 import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+    @Autowired
+    private UserDetailsService userDetailsService;
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // authentication - Foydalanuvchining identifikatsiya qilish.
-        // Ya'ni berilgan login va parolli user bor yoki yo'qligini aniqlash.
-        String password = UUID.randomUUID().toString();
-        System.out.println("User Password Mazgi: " + password);
-
-        UserDetails user = User.builder()
-                .username("user")
-                .password("{noop}" + password)
-                .roles("USER")
-                .build();
-
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(new InMemoryUserDetailsManager(user));
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+
         return authenticationProvider;
     }
 
@@ -48,12 +42,27 @@ public class SpringSecurityConfig {
                     .anyRequest()
                     .authenticated();
         });
-        http.httpBasic(Customizer.withDefaults());
 
+        http.httpBasic(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer :: disable); // csrf ochirilgan
         http.cors(AbstractHttpConfigurer :: disable); // cors ochirilgan
 
         return http.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new PasswordEncoder() {
+            @Override
+            public String encode(CharSequence rawPassword) {
+                return rawPassword.toString();
+            }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                String md5 = MD5Util.md5(rawPassword.toString());
+                return md5.equals(encodedPassword);
+            }
+        };
     }
 
 
