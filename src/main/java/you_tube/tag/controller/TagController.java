@@ -1,6 +1,6 @@
 package you_tube.tag.controller;
 
-import you_tube.ExceptionHandler.AppBadException;
+import you_tube.exceptionHandler.AppBadException;
 import you_tube.tag.dto.TagDTO;
 import you_tube.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
