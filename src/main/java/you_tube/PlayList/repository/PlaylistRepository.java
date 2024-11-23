@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface PlaylistRepository extends JpaRepository<PlayListEntity, Integer>, PagingAndSortingRepository<PlayListEntity,Integer> {
 
     @Query(" FROM PlayListEntity p WHERE p.channelId=?1 AND p.name=?2")
-    PlayListEntity exists(Integer id,String name);
+    PlayListEntity exists(String id,String name);
 
     @Modifying
     @Transactional

@@ -12,7 +12,7 @@ import you_tube.PlayList.enums.PlaylistStatus;
 public class CreatePlaylistDTO {
     private Integer id;
     @NotNull(message = "Enter your channel")
-    private Integer channel_id;
+    private String channel_id;
     @NotBlank(message = "Enter your name ")
     private String name;
     @NotBlank(message = "Enter your description")

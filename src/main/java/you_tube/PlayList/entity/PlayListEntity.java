@@ -21,7 +21,7 @@ public class PlayListEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "channel_id")
-    private Integer channelId;
+    private String channelId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "channel_id", insertable = false, updatable = false)
