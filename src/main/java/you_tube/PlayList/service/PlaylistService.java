@@ -1,16 +1,27 @@
 package you_tube.PlayList.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import you_tube.PlayList.dto.PlayListInfoDTO;
+import you_tube.attach.dtos.PhotoDTO;
+import you_tube.attach.service.AttachService;
 import you_tube.exceptionHandler.AppBadException;
 import you_tube.PlayList.dto.CreatePlaylistDTO;
 import you_tube.PlayList.dto.UpdateDTO;
 import you_tube.PlayList.entity.PlayListEntity;
 import you_tube.PlayList.enums.PlaylistStatus;
 import you_tube.PlayList.repository.PlaylistRepository;
+import you_tube.profile.dto.GetProfileDTO;
 import you_tube.profile.enums.ProfileStatus;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +29,8 @@ public class PlaylistService {
 
     @Autowired
     private PlaylistRepository playlistRepository;
+    @Autowired
+    private AttachService attachService;
 
 
     public CreatePlaylistDTO create(CreatePlaylistDTO dto) {
@@ -27,7 +40,7 @@ public class PlaylistService {
             throw new AppBadException("Does such a playlist exist?");
         }
         playlistEntity.setName(dto.getName());
-        playlistEntity.setChannel_id(dto.getChannel_id());
+        playlistEntity.setChannelId(dto.getChannel_id());
         playlistEntity.setDescription(dto.getDescription());
         playlistEntity.setStatus(dto.getStatus());
         playlistEntity.setOrderNum(dto.getOrderNum());
@@ -52,7 +65,7 @@ public class PlaylistService {
             dto1.setName(dto.getName());
             dto1.setDescription(dto.getDescription());
             dto1.setOrderNum(dto.getOrderNum());
-            dto1.setChannel_id(playlistEntity.getChannel_id());
+            dto1.setChannel_id(playlistEntity.getChannelId());
             return dto1;
         }
         throw new AppBadException("Does such a playlist exist?");
@@ -67,7 +80,7 @@ public class PlaylistService {
             dto1.setName(playListEntity.getName());
             dto1.setDescription(playListEntity.getDescription());
             dto1.setOrderNum(playListEntity.getOrderNum());
-            dto1.setChannel_id(playListEntity.getChannel_id());
+            dto1.setChannel_id(playListEntity.getChannelId());
             dto1.setStatus(playListEntity.getStatus());
             return dto1;
         }
@@ -80,5 +93,38 @@ public class PlaylistService {
             return true;
         }
         throw new AppBadException("Does such a playlist exist?");
+    }
+
+    public Page<PlayListInfoDTO> AllPage(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
+
+        Page<PlayListEntity> entityList = playlistRepository.getAll6(pageRequest);
+        Long total = entityList.getTotalElements();
+        List<PlayListInfoDTO> dtoList = new LinkedList<>();
+        for (PlayListEntity entity : entityList) {
+            PlayListInfoDTO playListInfoDTO = new PlayListInfoDTO();
+            playListInfoDTO.setId(entity.getId());
+            playListInfoDTO.setName(entity.getName());
+            playListInfoDTO.setDescription(entity.getDescription());
+            playListInfoDTO.setStatus(entity.getStatus());
+
+            GetProfileDTO getProfileDTO =new GetProfileDTO();
+            getProfileDTO.setId(entity.getChannel().getProfile().getId());
+            getProfileDTO.setName(entity.getChannel().getProfile().getName());
+            getProfileDTO.setSurname(entity.getChannel().getProfile().getSurname());
+            PhotoDTO photoDTO = new PhotoDTO();
+            photoDTO.setId(entity.getChannel().getProfile().getPhoto());
+            photoDTO.setUrl(attachService.getUrl(entity.getChannel().getProfile().getPhoto()));
+            getProfileDTO.setPhoto(photoDTO);
+
+            playListInfoDTO.setProfile(getProfileDTO);
+            playListInfoDTO.setStatus(entity.getStatus());
+            playListInfoDTO.setChannel(entity.getChannel());
+            playListInfoDTO.setOrder_num(entity.getOrderNum());
+            dtoList.add(playListInfoDTO);
+        }
+        PageImpl page1 = new PageImpl<>(dtoList, pageRequest, total);
+
+        return page1;
     }
 }
