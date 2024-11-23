@@ -14,6 +14,7 @@ import you_tube.Profile.repository.ProfileRepository;
 import you_tube.Util.JwtUtil;
 import you_tube.Util.MD5Util;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -49,6 +50,8 @@ public class AuthService {
         profileEntity.setPassword(MD5Util.md5(registration.getPassword()));
         profileEntity.setRole(ProfileRole.ROLE_USER);
         profileEntity.setStatus(ProfileStatus.IN_REGISTRATION);
+        profileEntity.setVisible(Boolean.TRUE);
+        profileEntity.setCreatedDate(LocalDateTime.now());
         profileRepository.save(profileEntity);
         return profileEntity;
     }
@@ -66,7 +69,10 @@ public class AuthService {
 
     public ProfileDTO login(AuthDTO dto) {
         ProfileEntity byEmail = profileRepository.findByEmail(dto.getEmail());
-        if (byEmail == null && !byEmail.getPassword().equals(MD5Util.md5(dto.getPassword()))) {
+        if (byEmail == null){
+            throw new AppBadException("email not found");
+        }
+        if (!byEmail.getPassword().equals(MD5Util.md5(dto.getPassword()))) {
             throw new AppBadException("email or password incorrect");
         }
         if (byEmail.getStatus() != ProfileStatus.ACTIVE) {

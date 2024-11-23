@@ -6,7 +6,7 @@ CREATE TABLE profile (
                          password VARCHAR(255),
                          photo VARCHAR(255),
                          role VARCHAR(255) CHECK (role IN ('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_PUBLISHER', 'ROLE_USER')),
-                         status VARCHAR(255),
+                         status VARCHAR(255) CHECK (status IN ('ACTIVE','INACTIVE','DELETED','IN_REGISTRATION','REGISTERED')),
                          visible BOOLEAN,
                          created_date TIMESTAMP
 );

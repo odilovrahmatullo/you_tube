@@ -14,6 +14,7 @@ import java.util.Optional;
 @Repository
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer> {
 
+    @Query("from ProfileEntity where email = ?1 and visible = true ")
     ProfileEntity findByEmail(String email);
 
     @Query("FROM ProfileEntity p WHERE p.visible  = true ")
