@@ -35,7 +35,7 @@ public class SpringSecurityConfig {
         // Ya'ni foydalanuvchi murojat qilayotgan API-larni ishlatishga ruxsati bor yoki yo'qligini tekshirishdir.
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/api/auth/login").permitAll()
+                    .requestMatchers("/api/auth/registration/**").permitAll()
                     .requestMatchers("attach/**").permitAll()
                     .anyRequest()
                     .authenticated();

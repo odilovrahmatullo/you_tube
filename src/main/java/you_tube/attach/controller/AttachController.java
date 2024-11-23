@@ -47,7 +47,6 @@ public class AttachController {
     public ResponseEntity<?> all(@RequestParam int page,
                                  @RequestParam int size,
                                  @RequestHeader("Authorization") String token) {
-        System.out.println(token);
         JwtDTO dto = JwtUtil.decode(token.substring(7));
         if (dto.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
             page = Math.max(page - 1, 0);

@@ -3,10 +3,10 @@ POST localhost:8080/api/auth/registration
 Content-Type: application/json
 
 {
-  "name": "Mexriddin",
-  "surname": "Zaxriddinov",
-  "password": "123456",
-  "email": "Zaxriddinov1707@gmail.com"
+  "name": "Odilov",
+  "surname": "Rahmatullo",
+  "password": "12345678",
+  "email": "odilovrahmatullo4@gmail.com"
 }
 
 ### Login

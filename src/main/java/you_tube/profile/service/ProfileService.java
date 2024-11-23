@@ -1,6 +1,7 @@
 package you_tube.profile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import you_tube.exceptionHandler.AppBadException;
 import you_tube.history.service.EmailSendingService;
@@ -25,6 +26,8 @@ public class ProfileService {
     private EmailSendingService emailSendingService;
 
     private String updateEmail ;
+    @Value("${server.domain}")
+    private String domainName;
 
     public ProfileDTO create(CreateProfile profile) {
         ProfileEntity byEmail = profileRepository.findByEmail(profile.getEmail());
@@ -51,8 +54,8 @@ public class ProfileService {
         sb.append("<p>Click the link below to complete registration</p>\n");
         sb.append("<p><a style=\"padding: 5px; background-color: indianred; color: white\"  href=\"http://localhost:8080/api/profile/email/confirm/")
                 .append(byEmail.getId()).append("\" target=\"_blank\">Click Th</a></p>\n");
-        emailSendingService.sendSimpleMessage(dto.getEmail(), "Complite Registration", sb.toString());
-        emailSendingService.sendMimeMessage(dto.getEmail(), "Tasdiqlash", sb.toString());
+        emailSendingService.sendSimpleMessage(dto.getEmail(), "Complite Registration", getConfirmationButton(byEmail.getId()));
+        emailSendingService.sendMimeMessage(dto.getEmail(), "Tasdiqlash", getConfirmationButton(byEmail.getId()));
         return "Confirm sent email";
     }
 
@@ -89,5 +92,18 @@ public class ProfileService {
             return profileDTO;
         }
         throw new AppBadException("Invalid profile id");
+    }
+    public ProfileEntity getByEmail(String email){
+        return profileRepository.findByEmail(email);
+    }
+
+    public String getConfirmationButton(Integer id) {
+        return "<html><body>" +
+                "<p>Click below to confirm your registration:</p>" +
+                "<a href=\"" + domainName + "/auth/registration/confirm/" + id + "\" " +
+                "style=\"display: inline-block; padding: 10px 20px; font-size: 16px; background-color:" +
+                " #007bff; color: white; text-decoration: none; border-radius: 5px; border: " +
+                "1px solid #007bff;\">Confirm</a> </body></html>";
+
     }
 }

@@ -1,6 +1,7 @@
 package you_tube.profile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import you_tube.exceptionHandler.AppBadException;
 import you_tube.history.service.EmailSendingService;
@@ -23,6 +24,8 @@ public class AuthService {
     private ProfileRepository profileRepository;
     @Autowired
     private EmailSendingService emailSendingService;
+    @Value("${server.domain}")
+    private String domainName;
 
     public String create(RegistrationDTO registration) {
         ProfileEntity byEmail = profileRepository.findByEmail(registration.getEmail());
@@ -36,8 +39,8 @@ public class AuthService {
         sb.append("<p>Click the link below to complete registration</p>\n");
         sb.append("<p><a style=\"padding: 5px; background-color: indianred; color: white\"  href=\"http://localhost:8080/api/auth/registration/confirm/")
                 .append(profileEntity.getId()).append("\" target=\"_blank\">Click Th</a></p>\n");
-        emailSendingService.sendSimpleMessage(registration.getEmail(), "Complite Registration", sb.toString());
-        emailSendingService.sendMimeMessage(registration.getEmail(), "Tasdiqlash", sb.toString());
+        emailSendingService.sendSimpleMessage(registration.getEmail(), "Complite Registration", getConfirmationButton(profileEntity.getId()));
+        emailSendingService.sendMimeMessage(registration.getEmail(), "Tasdiqlash",getConfirmationButton(profileEntity.getId()));
         return "Confirm sent email";
     }
 
@@ -84,5 +87,16 @@ public class AuthService {
         profileDTO.setRefreshToken(RefreshToken);
 
         return profileDTO;
+    }
+
+
+    public String getConfirmationButton(Integer id) {
+        return "<html><body>" +
+                "<p>Click below to confirm your registration:</p>" +
+                "<a href=\"" + domainName + "/api/auth/registration/confirm/" + id + "\" " +
+                "style=\"display: inline-block; padding: 10px 20px; font-size: 16px; background-color:" +
+                " #007bff; color: white; text-decoration: none; border-radius: 5px; border: " +
+                "1px solid #007bff;\">Confirm</a> </body></html>";
+
     }
 }
