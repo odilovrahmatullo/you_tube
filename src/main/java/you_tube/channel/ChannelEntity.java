@@ -28,7 +28,7 @@ public class ChannelEntity {
     @JoinColumn(name = "photo_id", insertable = false, updatable = false)
     private AttachEntity photo;
 
-    @Column(name = "banner_id", insertable = false, updatable = false)
+    @Column(name = "banner_id")
     private String bannerId;
     @OneToOne
     @JoinColumn(name = "banner_id", insertable = false, updatable = false)
