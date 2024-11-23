@@ -7,7 +7,7 @@ import org.springframework.boot.convert.PeriodUnit;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import you_tube.ExceptionHandler.AppBadException;
+import you_tube.exceptionHandler.AppBadException;
 import you_tube.PlayList.dto.CreatePlaylistDTO;
 import you_tube.PlayList.dto.UpdateDTO;
 import you_tube.PlayList.enums.PlaylistStatus;

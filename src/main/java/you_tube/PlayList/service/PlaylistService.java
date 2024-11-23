@@ -2,13 +2,13 @@ package you_tube.PlayList.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import you_tube.ExceptionHandler.AppBadException;
+import you_tube.exceptionHandler.AppBadException;
 import you_tube.PlayList.dto.CreatePlaylistDTO;
 import you_tube.PlayList.dto.UpdateDTO;
 import you_tube.PlayList.entity.PlayListEntity;
 import you_tube.PlayList.enums.PlaylistStatus;
 import you_tube.PlayList.repository.PlaylistRepository;
-import you_tube.Profile.enums.ProfileStatus;
+import you_tube.profile.enums.ProfileStatus;
 
 import java.time.LocalDate;
 import java.util.Optional;
