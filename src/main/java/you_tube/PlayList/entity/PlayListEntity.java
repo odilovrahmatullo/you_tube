@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import you_tube.PlayList.enums.PlaylistStatus;
+import you_tube.channel.ChannelEntity;
 
 import java.time.LocalDate;
 
@@ -20,7 +21,12 @@ public class PlayListEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "channel_id")
-    private Integer channel_id;
+    private String channelId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "channel_id", insertable = false, updatable = false)
+    private ChannelEntity channel;
+
     @Column(name = "name")
     private String name;
     @Column(name = "description")
