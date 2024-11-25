@@ -42,6 +42,6 @@ public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
     @Query("Update ChannelEntity Set status = ?2 where id =?1")
     Integer changeStatus(String id, ChannelStatus status);
 
-    @Query("From ChannelEntity where profileId = ?1 and status =?2 ")
-    List<ChannelEntity> getChannels(Integer userId, ChannelStatus channelStatus);
+    @Query("FROM ChannelEntity c JOIN c.profile p WHERE p.email = ?1 and c.status = ?2")
+    List<ChannelEntity> getChannels(String email, ChannelStatus channelStatus);
 }

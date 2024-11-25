@@ -2,9 +2,9 @@ package you_tube.channel;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import you_tube.profile.dto.JwtDTO;
 import you_tube.profile.enums.ProfileRole;
@@ -17,17 +17,15 @@ public class ChannelController {
     private ChannelService channelService;
 
     @PostMapping
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> create(@Valid @RequestBody ChannelDTO dto,
                                     @RequestHeader("Authorization") String token) {
         JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name())) {
-            return ResponseEntity.ok(channelService.create(dto, jwtDTO.getEmail()));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
+        return ResponseEntity.ok(channelService.create(dto, jwtDTO.getEmail()));
     }
 
     @PutMapping("/update/photo/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> updatePhoto(@PathVariable String id,
                                          @NotNull @RequestParam String photoId,
                                          @RequestHeader("Authorization") String token) {
@@ -40,6 +38,7 @@ public class ChannelController {
     }
 
     @PutMapping("/update/banner/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> updateBanner(@PathVariable String id,
                                           @NotNull @RequestParam String bannerId,
                                           @RequestHeader("Authorization") String token) {
@@ -52,28 +51,18 @@ public class ChannelController {
     }
 
     @PutMapping("/update/chanel-info/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> updateChannel(@PathVariable String id,
-                                           @RequestBody UpdateChannelDTO dto,
-                                           @RequestHeader("Authorization") String token) {
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
+                                           @RequestBody UpdateChannelDTO dto) {
             return ResponseEntity.ok(channelService.updateInfo(id, dto));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
     }
 
     @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getPagination(@RequestParam Integer page,
-                                           @RequestParam Integer size,
-                                           @RequestHeader("Authorization") String token) {
+                                           @RequestParam Integer size) {
         page = Math.max(page - 1, 0);
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        if (jwtDTO.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
             return ResponseEntity.ok(channelService.pagination(page, size));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
     }
 
     @GetMapping("by/{id}")
@@ -82,14 +71,16 @@ public class ChannelController {
     }
 
     @PutMapping("change-status/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER') or hasRole('ADMIN')")
     public ResponseEntity<?> changeStatus(@PathVariable String id,
                                           @RequestParam ChannelStatus status) {
         return ResponseEntity.ok(channelService.changeStatus(id,status));
     }
 
-    @GetMapping("users-channel/{userId}")
-    public ResponseEntity<?> getUsersChannelList(@PathVariable Integer userId){
-        return ResponseEntity.ok(channelService.getUsersChannel(userId));
+    @GetMapping("users-channel")
+    public ResponseEntity<?> getUsersChannelList(@RequestHeader("Authorization") String token){
+        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
+        return ResponseEntity.ok(channelService.getUsersChannel(jwtDTO.getEmail()));
     }
 
 }
