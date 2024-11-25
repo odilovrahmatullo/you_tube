@@ -25,6 +25,7 @@ public class AttachController {
     private ProfileService profileService;
 
     @PostMapping("/upload")
+
     public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file,
                                             @RequestHeader(value = "Accepted-Language", defaultValue = "uz") AppLanguage lang){
        return ResponseEntity.ok(attachService.upload(file,lang.name()));
@@ -45,18 +46,13 @@ public class AttachController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> all(@RequestParam int page,
-                                 @RequestParam int size,
-                                 @RequestHeader("Authorization") String token) {
-        JwtDTO dto = JwtUtil.decode(token.substring(7));
-        if (dto.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
+                                 @RequestParam int size) {
             page = Math.max(page - 1, 0);
             return ResponseEntity.ok(attachService.getAll(page, size));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
     }
 
     @PutMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable String id){
         attachService.delete(id);
         return ResponseEntity.ok(HttpStatus.NO_CONTENT);

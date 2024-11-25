@@ -1,7 +1,7 @@
 ### Create channel (RoleUser)
 POST localhost:8080/channel
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzIzNjY4OTEsImV4cCI6MTczMjQ1MzI5MX0.JkqjXnTL6uDAQjXIHkD30Vnnlz6xn_gHEFxOWpIe6CI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI1Mjk1NzIsImV4cCI6MTczMjYxNTk3Mn0.jECNxc8UxfvbigXosyrbuIAai-mDcu9izXYcq7cPsfY
 
 {
   "name": "odilovsblog",
@@ -41,4 +41,5 @@ PUT localhost:8080/channel/change-status/3d3905cd-05b4-43e1-b211-c5b61993b4f2?st
 Content-Type: application/json
 
 ### Get channel List of user
-GET localhost:8080/channel/users-channel/5
+GET localhost:8080/channel/users-channel
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI1Mjk1NzIsImV4cCI6MTczMjYxNTk3Mn0.jECNxc8UxfvbigXosyrbuIAai-mDcu9izXYcq7cPsfY

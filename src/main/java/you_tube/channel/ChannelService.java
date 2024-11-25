@@ -96,8 +96,8 @@ public class ChannelService {
 
     }
 
-    public List<ChannelDTO> getUsersChannel(Integer userId) {
-        List<ChannelEntity> usersChannelList = channelRepository.getChannels(userId, ChannelStatus.ACTIVE);
+    public List<ChannelDTO> getUsersChannel(String email) {
+        List<ChannelEntity> usersChannelList = channelRepository.getChannels(email, ChannelStatus.ACTIVE);
         return usersChannelList.stream().map(item -> toDTO(item)).toList();
     }
 }
