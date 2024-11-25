@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import you_tube.attach.service.AttachService;
 import you_tube.profile.service.ProfileService;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,8 @@ public class ChannelService {
     private ChannelRepository channelRepository;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private AttachService attachService;
 
     public ChannelDTO create(ChannelDTO dto, String email) {
         ChannelEntity entity = new ChannelEntity();
@@ -65,5 +69,24 @@ public class ChannelService {
         Page<ChannelEntity> pageList = channelRepository.getPagination(ChannelStatus.ACTIVE,pagination);
         List<ChannelDTO> channelLIst = pageList.stream().map(item -> toDTO(item)).toList();
         return new PageImpl<>(channelLIst,pagination,pageList.getTotalPages());
+    }
+
+    public ChannelDTO getById(String id) {
+        ChannelEntity entity = channelRepository.getByIdAndVisibleTrue(id,ChannelStatus.ACTIVE);
+        return fullMapper(entity);
+
+    }
+
+    public ChannelDTO fullMapper(ChannelEntity entity){
+        ChannelDTO dto = new ChannelDTO();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setDescription(entity.getDescription());
+        dto.setStatus(entity.getStatus());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setProfile(profileService.getById(entity.getProfileId()));
+        dto.setBanner(attachService.getDTO(entity.getBannerId()));
+        dto.setPhoto(attachService.getDTO(entity.getPhotoId()));
+        return dto;
     }
 }

@@ -31,4 +31,7 @@ public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
 
     @Query("From ChannelEntity where status = ?1 ")
     Page<ChannelEntity> getPagination(ChannelStatus status,Pageable pagination);
+
+    @Query("from ChannelEntity where id = ?1 and status = ?2")
+    ChannelEntity getByIdAndVisibleTrue(String id, ChannelStatus status);
 }
