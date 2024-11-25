@@ -1,10 +1,15 @@
 package you_tube.video;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import you_tube.profile.entity.ProfileEntity;
 
 import java.time.LocalDateTime;
-
+@Entity
+@Getter
+@Setter
+@Table(name = "video_like")
 public class VideoLikeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

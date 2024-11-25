@@ -55,8 +55,7 @@ public class VideoEntity {
    @Column(name = "channel_id")
    private String channelId;
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "channel_id")
+   @JoinColumn(name = "channel_id", insertable = false,updatable = false)
    private ChannelEntity channel;
-
 
 }
