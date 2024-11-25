@@ -3,10 +3,15 @@ package you_tube.channel;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import you_tube.profile.service.ProfileService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ChannelService {
@@ -54,4 +59,11 @@ public class ChannelService {
         return channelRepository.updateInfo(id,dto.getName(),dto.getDescription())==1;
     }
 
+
+    public Page<ChannelDTO> pagination(Integer page, Integer size) {
+        Pageable pagination = PageRequest.of(page,size);
+        Page<ChannelEntity> pageList = channelRepository.getPagination(ChannelStatus.ACTIVE,pagination);
+        List<ChannelDTO> channelLIst = pageList.stream().map(item -> toDTO(item)).toList();
+        return new PageImpl<>(channelLIst,pagination,pageList.getTotalPages());
+    }
 }

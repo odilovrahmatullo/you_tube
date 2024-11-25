@@ -60,4 +60,17 @@ public class ChannelController {
             return ResponseEntity.status(403).build();
         }
     }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<?> getPagination(@RequestParam Integer page,
+                                           @RequestParam Integer size,
+                                           @RequestHeader("Authorization") String token){
+        page = Math.max(page-1,0);
+        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
+        if (jwtDTO.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
+            return ResponseEntity.ok(channelService.pagination(page,size));
+        } else {
+            return ResponseEntity.status(403).build();
+        }
+    }
 }
