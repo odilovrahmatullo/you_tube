@@ -45,6 +45,8 @@ public class SpringSecurityConfig {
 
                     .requestMatchers("/channel").permitAll()
                     .requestMatchers("/channel/update/**").permitAll()
+                    .requestMatchers("/channel/pagination**").permitAll()
+                    .requestMatchers("/api/profile/**").permitAll()
 
                     .anyRequest()
                     .authenticated();

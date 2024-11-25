@@ -2,6 +2,7 @@ package you_tube.channel;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ public class ChannelController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ChannelDTO dto,
-                                    @RequestHeader("Authorization") String token){
+                                    @RequestHeader("Authorization") String token) {
         JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
         if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name())) {
-            return ResponseEntity.ok(channelService.create(dto,jwtDTO.getEmail()));
+            return ResponseEntity.ok(channelService.create(dto, jwtDTO.getEmail()));
         } else {
             return ResponseEntity.status(403).build();
         }
@@ -29,21 +30,22 @@ public class ChannelController {
     @PutMapping("/update/photo/{id}")
     public ResponseEntity<?> updatePhoto(@PathVariable String id,
                                          @NotNull @RequestParam String photoId,
-                                         @RequestHeader("Authorization") String token){
+                                         @RequestHeader("Authorization") String token) {
         JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
         if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
-            return ResponseEntity.ok(channelService.updatePhoto(id,photoId));
+            return ResponseEntity.ok(channelService.updatePhoto(id, photoId));
         } else {
             return ResponseEntity.status(403).build();
         }
     }
+
     @PutMapping("/update/banner/{id}")
     public ResponseEntity<?> updateBanner(@PathVariable String id,
-                                          @NotNull  @RequestParam String bannerId,
-                                          @RequestHeader("Authorization") String token){
+                                          @NotNull @RequestParam String bannerId,
+                                          @RequestHeader("Authorization") String token) {
         JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
         if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
-            return ResponseEntity.ok(channelService.updateBanner(id,bannerId));
+            return ResponseEntity.ok(channelService.updateBanner(id, bannerId));
         } else {
             return ResponseEntity.status(403).build();
         }
@@ -52,12 +54,42 @@ public class ChannelController {
     @PutMapping("/update/chanel-info/{id}")
     public ResponseEntity<?> updateChannel(@PathVariable String id,
                                            @RequestBody UpdateChannelDTO dto,
-                                           @RequestHeader("Authorization") String token){
+                                           @RequestHeader("Authorization") String token) {
         JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
         if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
-            return ResponseEntity.ok(channelService.updateInfo(id,dto));
+            return ResponseEntity.ok(channelService.updateInfo(id, dto));
         } else {
             return ResponseEntity.status(403).build();
         }
     }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<?> getPagination(@RequestParam Integer page,
+                                           @RequestParam Integer size,
+                                           @RequestHeader("Authorization") String token) {
+        page = Math.max(page - 1, 0);
+        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
+        if (jwtDTO.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
+            return ResponseEntity.ok(channelService.pagination(page, size));
+        } else {
+            return ResponseEntity.status(403).build();
+        }
+    }
+
+    @GetMapping("by/{id}")
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        return ResponseEntity.ok(channelService.getById(id));
+    }
+
+    @PutMapping("change-status/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable String id,
+                                          @RequestParam ChannelStatus status) {
+        return ResponseEntity.ok(channelService.changeStatus(id,status));
+    }
+
+    @GetMapping("users-channel/{userId}")
+    public ResponseEntity<?> getUsersChannelList(@PathVariable Integer userId){
+        return ResponseEntity.ok(channelService.getUsersChannel(userId));
+    }
+
 }

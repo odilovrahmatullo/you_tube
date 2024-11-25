@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import you_tube.attach.dtos.AttachDTO;
+import you_tube.attach.dtos.AttachSimpleDTO;
 import you_tube.attach.entity.AttachEntity;
 import you_tube.attach.repository.AttachRepository;
 import you_tube.exceptionHandler.ResourceNotFoundException;
@@ -198,5 +199,16 @@ public class AttachService {
         }
         return new PageImpl<>(dtoList, pageable, entityPage.getTotalPages());
     }
+
+    public AttachSimpleDTO getDTO(String id){
+        if(id==null){
+            return null;
+        }
+        AttachSimpleDTO dto = new AttachSimpleDTO();
+        dto.setId(id);
+        dto.setUrl(getUrl(id));
+        return dto;
+    }
+
 }
 
