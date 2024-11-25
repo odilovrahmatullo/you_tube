@@ -87,4 +87,9 @@ public class ChannelController {
         return ResponseEntity.ok(channelService.changeStatus(id,status));
     }
 
+    @GetMapping("users-channel/{userId}")
+    public ResponseEntity<?> getUsersChannelList(@PathVariable Integer userId){
+        return ResponseEntity.ok(channelService.getUsersChannel(userId));
+    }
+
 }

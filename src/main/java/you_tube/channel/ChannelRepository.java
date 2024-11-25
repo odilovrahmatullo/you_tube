@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
                                            PagingAndSortingRepository<ChannelEntity,String> {
 
@@ -39,4 +41,7 @@ public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
     @Transactional
     @Query("Update ChannelEntity Set status = ?2 where id =?1")
     Integer changeStatus(String id, ChannelStatus status);
+
+    @Query("From ChannelEntity where profileId = ?1 and status =?2 ")
+    List<ChannelEntity> getChannels(Integer userId, ChannelStatus channelStatus);
 }

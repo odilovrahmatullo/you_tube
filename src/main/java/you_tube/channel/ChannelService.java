@@ -52,32 +52,32 @@ public class ChannelService {
 
 
     public Boolean updatePhoto(String id, String photoId) {
-        return channelRepository.updatePhoto(id,photoId)==1;
+        return channelRepository.updatePhoto(id, photoId) == 1;
     }
 
     public Boolean updateBanner(String id, String photoId) {
-        return channelRepository.updateBanner(id,photoId)==1;
+        return channelRepository.updateBanner(id, photoId) == 1;
     }
 
     public Boolean updateInfo(String id, UpdateChannelDTO dto) {
-        return channelRepository.updateInfo(id,dto.getName(),dto.getDescription())==1;
+        return channelRepository.updateInfo(id, dto.getName(), dto.getDescription()) == 1;
     }
 
 
     public Page<ChannelDTO> pagination(Integer page, Integer size) {
-        Pageable pagination = PageRequest.of(page,size);
-        Page<ChannelEntity> pageList = channelRepository.getPagination(ChannelStatus.ACTIVE,pagination);
+        Pageable pagination = PageRequest.of(page, size);
+        Page<ChannelEntity> pageList = channelRepository.getPagination(ChannelStatus.ACTIVE, pagination);
         List<ChannelDTO> channelLIst = pageList.stream().map(item -> toDTO(item)).toList();
-        return new PageImpl<>(channelLIst,pagination,pageList.getTotalPages());
+        return new PageImpl<>(channelLIst, pagination, pageList.getTotalPages());
     }
 
     public ChannelDTO getById(String id) {
-        ChannelEntity entity = channelRepository.getByIdAndVisibleTrue(id,ChannelStatus.ACTIVE);
+        ChannelEntity entity = channelRepository.getByIdAndVisibleTrue(id, ChannelStatus.ACTIVE);
         return fullMapper(entity);
 
     }
 
-    public ChannelDTO fullMapper(ChannelEntity entity){
+    public ChannelDTO fullMapper(ChannelEntity entity) {
         ChannelDTO dto = new ChannelDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -92,7 +92,12 @@ public class ChannelService {
 
 
     public Boolean changeStatus(String id, ChannelStatus status) {
-        return channelRepository.changeStatus(id,status)==1;
+        return channelRepository.changeStatus(id, status) == 1;
 
+    }
+
+    public List<ChannelDTO> getUsersChannel(Integer userId) {
+        List<ChannelEntity> usersChannelList = channelRepository.getChannels(userId, ChannelStatus.ACTIVE);
+        return usersChannelList.stream().map(item -> toDTO(item)).toList();
     }
 }
