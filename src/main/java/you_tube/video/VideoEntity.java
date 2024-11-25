@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "video")
+@Table(name = "video",uniqueConstraints = @UniqueConstraint(
+        columnNames = {"id", "category_id"} // Har bir videoURL va category_id birgalikda noyob bo'lishi kerak
+))
 public class VideoEntity {
    @Id
    private String id;
@@ -20,7 +22,7 @@ public class VideoEntity {
    private String description;
    @Column(name = "category_id")
    private Integer categoryId;
-   @OneToOne(fetch = FetchType.LAZY)
+   @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "category_id",insertable = false,updatable = false)
    private CategoryEntity category;
 
@@ -46,11 +48,12 @@ public class VideoEntity {
    @Column(name = "video_type")
    @Enumerated(EnumType.STRING)
    private VideoType videoType;
+   private Boolean visible;
 
    @Column(name = "view_count")
-   private Long viewCount;
+   private long viewCount = 0;
    @Column(name = "shared_count")
-   private Long sharedCount;
+   private long sharedCount = 0;
 
    @Column(name = "channel_id")
    private String channelId;

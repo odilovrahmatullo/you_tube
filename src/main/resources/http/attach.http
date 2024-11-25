@@ -3,9 +3,9 @@ POST http://localhost:8080/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="men.jpg"
+Content-Disposition: form-data; name="file"; filename="library.mp4"
 
-< C:\Users\HP\Downloads\Telegram Desktop\men.jpg
+< C:\Users\HP\Downloads\Telegram Desktop\library.mp4
 
 ### OPEN ATTACH
 GET http://localhost:8080/attach/open/aafce968-237c-4d33-a241-57c4079abd75
