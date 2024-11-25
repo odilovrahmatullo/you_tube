@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import you_tube.PlayList.dto.PlayListInfoDTO;
 import you_tube.attach.dtos.PhotoDTO;
 import you_tube.attach.service.AttachService;
+import you_tube.attach.service.ResourceBundleService;
 import you_tube.exceptionHandler.AppBadException;
 import you_tube.PlayList.dto.CreatePlaylistDTO;
 import you_tube.PlayList.dto.UpdateDTO;
@@ -31,6 +32,8 @@ public class PlaylistService {
     private PlaylistRepository playlistRepository;
     @Autowired
     private AttachService attachService;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
 
     public CreatePlaylistDTO create(CreatePlaylistDTO dto) {
@@ -68,7 +71,7 @@ public class PlaylistService {
             dto1.setChannel_id(playlistEntity.getChannelId());
             return dto1;
         }
-        throw new AppBadException("Does such a playlist exist?");
+        throw new AppBadException(resourceBundleService.getMessage("playlist.not.found","uz"));
     }
     public CreatePlaylistDTO updateStatus(Integer id, PlaylistStatus status) {
         int result = playlistRepository.updateStatus(id, status);

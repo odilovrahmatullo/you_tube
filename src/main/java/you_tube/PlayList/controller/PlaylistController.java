@@ -46,7 +46,7 @@ public class PlaylistController {
                                          @RequestParam(value = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(playlistService.AllPage(page - 1, size));
     }
-
+    
     @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
     public ResponseEntity<?> handle(AppBadException e){
         return ResponseEntity.badRequest().body(e.getMessage());
