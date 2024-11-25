@@ -39,10 +39,15 @@ public class SpringSecurityConfig {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/api/auth/login").permitAll()
                     .requestMatchers("attach/**").permitAll()
+
+                    .requestMatchers("/api/playlist/**").permitAll()
+                    .requestMatchers("/api/email/confirm/**").permitAll()
+
                     .requestMatchers("/channel").permitAll()
                     .requestMatchers("/channel/update/**").permitAll()
                     .requestMatchers("/channel/pagination**").permitAll()
                     .requestMatchers("/api/profile/**").permitAll()
+
                     .anyRequest()
                     .authenticated();
         });

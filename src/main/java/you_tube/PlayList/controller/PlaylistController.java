@@ -41,6 +41,12 @@ public class PlaylistController {
         return ResponseEntity.ok(playlistService.deleted(id));
     }
 
+    @GetMapping("/all-playlist/")
+    private ResponseEntity<?> pagination(@RequestParam(value = "page", defaultValue = "1") int page,
+                                         @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(playlistService.AllPage(page - 1, size));
+    }
+    
     @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
     public ResponseEntity<?> handle(AppBadException e){
         return ResponseEntity.badRequest().body(e.getMessage());
