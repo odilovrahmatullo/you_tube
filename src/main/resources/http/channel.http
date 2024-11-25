@@ -36,4 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6I
 ### Get by id
 GET localhost:8080/channel/by/307bb48b-c0d8-4b1b-bd4e-390bcca15dd0
 
+### Update info of chanel
+PUT localhost:8080/channel/change-status/3d3905cd-05b4-43e1-b211-c5b61993b4f2?status=BLOCK
+Content-Type: application/json
 

@@ -34,4 +34,9 @@ public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
 
     @Query("from ChannelEntity where id = ?1 and status = ?2")
     ChannelEntity getByIdAndVisibleTrue(String id, ChannelStatus status);
+
+    @Modifying
+    @Transactional
+    @Query("Update ChannelEntity Set status = ?2 where id =?1")
+    Integer changeStatus(String id, ChannelStatus status);
 }

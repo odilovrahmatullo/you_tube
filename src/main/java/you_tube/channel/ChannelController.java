@@ -80,4 +80,11 @@ public class ChannelController {
     public ResponseEntity<?> getById(@PathVariable String id) {
         return ResponseEntity.ok(channelService.getById(id));
     }
+
+    @PutMapping("change-status/{id}")
+    public ResponseEntity<?> changeStatus(@PathVariable String id,
+                                          @RequestParam ChannelStatus status) {
+        return ResponseEntity.ok(channelService.changeStatus(id,status));
+    }
+
 }

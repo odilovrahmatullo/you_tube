@@ -89,4 +89,10 @@ public class ChannelService {
         dto.setPhoto(attachService.getDTO(entity.getPhotoId()));
         return dto;
     }
+
+
+    public Boolean changeStatus(String id, ChannelStatus status) {
+        return channelRepository.changeStatus(id,status)==1;
+
+    }
 }
