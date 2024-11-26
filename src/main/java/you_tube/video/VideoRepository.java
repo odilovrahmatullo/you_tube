@@ -13,4 +13,9 @@ public interface VideoRepository extends CrudRepository<VideoEntity,String> {
     @Modifying
     @Query("UPDATE VideoEntity set videoStatus = ?2 where id = ?1")
     int changeStatus(String videoId, VideoStatus status);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE VideoEntity set viewCount = viewCount + 1 where id = ?1")
+    void viewCount(String videoId);
 }

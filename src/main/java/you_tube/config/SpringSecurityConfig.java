@@ -30,7 +30,7 @@ public class SpringSecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public static final String [] AUTH_WHITELIST = {
-            "/api/auth/login"
+            "/api/auth/login", "video/view-count/*"
     };
     @Bean
     public AuthenticationProvider authenticationProvider() {

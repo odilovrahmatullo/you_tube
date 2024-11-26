@@ -108,4 +108,7 @@ public class VideoService {
         return "UPDATED "+videoRepository.changeStatus(videoId,status);
     }
 
+    public void viewCount(String videoId) {
+        videoRepository.viewCount(videoId);
+    }
 }
