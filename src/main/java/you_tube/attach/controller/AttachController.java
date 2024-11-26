@@ -8,10 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import you_tube.profile.dto.JwtDTO;
-import you_tube.profile.enums.ProfileRole;
-import you_tube.profile.service.ProfileService;
-import you_tube.utils.JwtUtil;
 import you_tube.attach.dtos.AttachDTO;
 import you_tube.attach.service.AttachService;
 import you_tube.enums.AppLanguage;
@@ -21,10 +17,9 @@ import you_tube.enums.AppLanguage;
 public class AttachController {
     @Autowired
     private AttachService attachService;
-    @Autowired
-    private ProfileService profileService;
 
     @PostMapping("/upload")
+
     public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file,
                                             @RequestHeader(value = "Accepted-Language", defaultValue = "uz") AppLanguage lang){
        return ResponseEntity.ok(attachService.upload(file,lang.name()));
@@ -45,18 +40,13 @@ public class AttachController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> all(@RequestParam int page,
-                                 @RequestParam int size,
-                                 @RequestHeader("Authorization") String token) {
-        JwtDTO dto = JwtUtil.decode(token.substring(7));
-        if (dto.getRole().equals(ProfileRole.ROLE_ADMIN.name())) {
+                                 @RequestParam int size) {
             page = Math.max(page - 1, 0);
             return ResponseEntity.ok(attachService.getAll(page, size));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
     }
 
     @PutMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> delete(@PathVariable String id){
         attachService.delete(id);
         return ResponseEntity.ok(HttpStatus.NO_CONTENT);

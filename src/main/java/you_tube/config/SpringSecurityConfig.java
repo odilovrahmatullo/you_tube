@@ -1,33 +1,42 @@
 package you_tube.config;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import you_tube.utils.MD5Util;
 
 import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public static final String [] AUTH_WHITELIST = {
+            "/api/auth/login", "video/**"
+    };
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-
         return authenticationProvider;
     }
 
@@ -37,7 +46,7 @@ public class SpringSecurityConfig {
         // Ya'ni foydalanuvchi murojat qilayotgan API-larni ishlatishga ruxsati bor yoki yo'qligini tekshirishdir.
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
-                    .requestMatchers("/api/auth/login").permitAll()
+                    .requestMatchers(AUTH_WHITELIST).permitAll()
                     .requestMatchers("attach/**").permitAll()
 
                     .requestMatchers("/api/playlist/**").permitAll()
@@ -45,12 +54,13 @@ public class SpringSecurityConfig {
 
                     .requestMatchers("/channel").permitAll()
                     .requestMatchers("/channel/update/**").permitAll()
+                    .requestMatchers("/channel/pagination**").permitAll()
+                    .requestMatchers("/api/profile/**").permitAll()
 
                     .anyRequest()
                     .authenticated();
-        });
+        }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.httpBasic(Customizer.withDefaults());
         http.csrf(AbstractHttpConfigurer :: disable); // csrf ochirilgan
         http.cors(AbstractHttpConfigurer :: disable); // cors ochirilgan
 

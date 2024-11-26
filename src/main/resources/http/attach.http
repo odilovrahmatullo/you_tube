@@ -3,16 +3,17 @@ POST http://localhost:8080/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="men.jpg"
+Content-Disposition: form-data; name="file"; filename="library.mp4"
 
-< C:\Users\HP\Downloads\Telegram Desktop\men.jpg
+< C:\Users\HP\Downloads\Telegram Desktop\library.mp4
 
 ### OPEN ATTACH
 GET http://localhost:8080/attach/open/aafce968-237c-4d33-a241-57c4079abd75
 
 ### GET ALL ATTACHES
 GET  http://localhost:8080/attach/all?page=1&size=5
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjM0MDc1MCwiZXhwIjoxNzMyNDI3MTUwfQ.uhLW2R6i8kuqC9G6NhkZ_TueNz_oTnXlbHn-mGBfKzU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjUzMDM2NiwiZXhwIjoxNzMyNjE2NzY2fQ.tuizvB0QkMebU0bKi7HtXgaB7NYAss-qSUZiwPiSzsw
+
 
 ### DOWNLOAD ATTACHES
 GET http://localhost:8080/attach/download/aba3a364-ce22-4600-90c9-e3fb4f9ce688.jpg

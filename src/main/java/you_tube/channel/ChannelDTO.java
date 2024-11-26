@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import you_tube.attach.dtos.AttachDTO;
+import you_tube.attach.dtos.AttachSimpleDTO;
 import you_tube.attach.entity.AttachEntity;
+import you_tube.profile.dto.ProfileDTO;
 import you_tube.profile.entity.ProfileEntity;
 
 import java.time.LocalDateTime;
@@ -29,10 +32,10 @@ public class ChannelDTO {
 
 
     private String id;
-    private AttachEntity photo;
-    private AttachEntity banner;
+    private AttachSimpleDTO photo;
+    private AttachSimpleDTO banner;
     private LocalDateTime createdDate;
     private Integer profileId;
     private ChannelStatus status;
-    private ProfileEntity profile;
+    private ProfileDTO profile;
 }

@@ -1,0 +1,8 @@
+### Create category
+POST localhost:8080/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjUzMDM2NiwiZXhwIjoxNzMyNjE2NzY2fQ.tuizvB0QkMebU0bKi7HtXgaB7NYAss-qSUZiwPiSzsw
+Content-Type: application/json
+
+{
+  "name": "All"
+}
