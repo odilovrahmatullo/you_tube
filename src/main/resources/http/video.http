@@ -14,3 +14,18 @@ Content-Type: application/json
   "videoType": "SHORT",
   "videoStatus": "PRIVATE"
 }
+
+### update video
+PUT localhost:8080/video/530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI1Mjk1NzIsImV4cCI6MTczMjYxNTk3Mn0.jECNxc8UxfvbigXosyrbuIAai-mDcu9izXYcq7cPsfY
+Content-Type: application/json
+
+{
+  "title": "library",
+  "description": "I am in library",
+  "videoStatus": "PUBLIC"
+}
+
+### Change video status
+PUT localhost:8080/video/status/530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4?status=PRIVATE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI1Mjk1NzIsImV4cCI6MTczMjYxNTk3Mn0.jECNxc8UxfvbigXosyrbuIAai-mDcu9izXYcq7cPsfY
