@@ -44,4 +44,7 @@ public interface ChannelRepository extends CrudRepository<ChannelEntity,String>,
 
     @Query("FROM ChannelEntity c JOIN c.profile p WHERE p.email = ?1 and c.status = ?2")
     List<ChannelEntity> getChannels(String email, ChannelStatus channelStatus);
+
+    @Query("select ch.id as id, ch.name as name from ChannelEntity as ch")
+    ChannelShortInfoDTO getShortInfo(String id);
 }
