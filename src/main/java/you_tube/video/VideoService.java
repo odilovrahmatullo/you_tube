@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 import you_tube.attach.service.AttachService;
 import you_tube.channel.ChannelDTO;
 import you_tube.channel.ChannelService;
+import you_tube.config.CustomUserDetails;
 import you_tube.exceptionHandler.AppBadRequest;
+import you_tube.utils.SpringSecurityUtil;
+import you_tube.video_watched.service.VideoWatchedService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +34,8 @@ public class VideoService {
     private AttachService attachService;
     @Autowired
     private ChannelService channelService;
+    @Autowired
+    private VideoWatchedService videoWatchedService;
 
     public VideoDTO create(VideoDTO dto) {
         VideoEntity entity = new VideoEntity();
@@ -122,6 +127,10 @@ public class VideoService {
     }
 
     public void viewCount(String videoId) {
+        /*VideoWatched added*/
+        CustomUserDetails currentUser = SpringSecurityUtil.getCurrentUser();
+        videoWatchedService.createVideoWatched(currentUser.getId(),videoId);
+        /*View Count*/
         videoRepository.viewCount(videoId);
     }
 
