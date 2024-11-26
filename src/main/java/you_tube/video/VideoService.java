@@ -77,14 +77,7 @@ public class VideoService {
             params.put("videoType", dto.getVideoType());
             comma = false;
         }
-        if (dto.getVideoStatus() != null) {
-            if (!comma) {
-                conditions.append(", ");
-            }
-            conditions.append("v.videoStatus = :videoStatus ");
-            params.put("videoStatus", dto.getVideoStatus());
-            comma = false;
-        }
+
         if (dto.getPreviewAttachId() != null) {
             if (!comma) {
                 conditions.append(", ");
@@ -110,4 +103,9 @@ public class VideoService {
         return "UPDATED " + updatedCount;
 
     }
+
+    public String changeStatus(String videoId, VideoStatus status) {
+        return "UPDATED "+videoRepository.changeStatus(videoId,status);
+    }
+
 }

@@ -17,10 +17,18 @@ public class VideoController {
         return ResponseEntity.ok(videoService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{videoId}")
     @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
-    public ResponseEntity<?> update(@PathVariable String id,
+    public ResponseEntity<?> update(@PathVariable String videoId,
                                     @RequestBody VideoDTO dto){
-        return ResponseEntity.ok(videoService.update(id,dto));
+        return ResponseEntity.ok(videoService.update(videoId,dto));
+    }
+
+    @PutMapping("status/{videoId}")
+    @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
+    public ResponseEntity<?> changeStatus(@PathVariable String videoId,
+                                          @RequestParam VideoStatus status){
+        return ResponseEntity.ok(videoService.changeStatus(videoId,status));
+
     }
 }
