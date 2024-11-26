@@ -42,6 +42,7 @@ public class PlaylistService {
         if (exists != null) {
             throw new AppBadException("Does such a playlist exist?");
         }
+
         playlistEntity.setName(dto.getName());
         playlistEntity.setChannelId(dto.getChannel_id());
         playlistEntity.setDescription(dto.getDescription());
