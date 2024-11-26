@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import you_tube.PlayList.entity.PlayListEntity;
 import you_tube.attach.entity.AttachEntity;
+import you_tube.video.VideoEntity;
 
 import java.time.LocalDateTime;
 
@@ -27,7 +28,7 @@ public class PlaylistVideoEntity {
     private String videoId;
     @ManyToOne
     @JoinColumn(name = "video_id", insertable = false, updatable = false)
-    private AttachEntity video;
+    private VideoEntity video;
 
     @Column(name = "order_number")
     private Integer orderNumber;

@@ -6,8 +6,11 @@ import you_tube.Playlist_video.dto.PlaylistVideoDTO;
 import you_tube.Playlist_video.entity.PlaylistVideoEntity;
 import you_tube.Playlist_video.repository.PlaylistVideoRepository;
 import you_tube.exceptionHandler.AppBadException;
+import you_tube.video.VideoDTO;
+import you_tube.video.VideoEntity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,6 +60,21 @@ public class PlaylistVideoService {
         if(deletedNumber == 0) {
             throw new AppBadException("Video does not exist");
         }
+    }
+
+    public List<VideoDTO> getPlaylistVideos(Integer playlistId) {
+        List<VideoEntity> entity = playlistVideoRepository.findAllVideosByPlaylistId(playlistId);
+        if(entity != null){
+            throw new AppBadException("No videos in the playlist");
+        }
+        List<VideoDTO> videos = new ArrayList<>();
+        for(VideoEntity video : entity) {
+
+
+
+        }
+
+        return null;
     }
 
 
