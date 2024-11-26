@@ -1,5 +1,6 @@
 package you_tube.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,45 +25,56 @@ import java.util.Arrays;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        AntPathMatcher pathMatcher = new AntPathMatcher();
-        return Arrays
-                .stream(SpringSecurityConfig.AUTH_WHITELIST)
-                .anyMatch(p -> pathMatcher.match(p, request.getServletPath()));
-    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = extractJwtFromRequest(request);
-        if (authHeader == null) {
+        final String header = request.getHeader("Authorization");
+        if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
+
+        final String token = header.substring(7).trim();
+
         try {
-            final String authToken = authHeader.trim();
-            JwtDTO dto = JwtUtil.decode(authToken);
-            String email = dto.getEmail();
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            JwtDTO dto = JwtUtil.decode(token);
+
+            String username = dto.getEmail();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        } catch (ExpiredJwtException e) {
+            String refreshToken = request.getHeader("Refresh-Token");
+//        If the token is invalid, create a new token.
+            if (refreshToken != null) {
+                try {
+                    JwtDTO refreshDto = JwtUtil.decode(refreshToken);
 
-            filterChain.doFilter(request,response);
-        }
-        catch (JwtException e){
-            filterChain.doFilter(request, response);
-        }
-    }
+                    if ("refresh".equals(refreshDto.getType())) {
+                        String newAccessToken = JwtUtil.encode(refreshDto.getEmail(), refreshDto.getRole());
 
+                        response.setHeader("New-Access-Token", newAccessToken);
 
-        private String extractJwtFromRequest (HttpServletRequest request){
-            String bearerToken = request.getHeader("Authorization");
-            if (bearerToken != null) {
-                return bearerToken.substring(7).trim();
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(refreshDto.getEmail());
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                                userDetails, null, userDetails.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                } catch (JwtException ex) {
+                    // Deauthenticate user if refresh token is invalid
+                    SecurityContextHolder.clearContext();
+                }
+            } else {
+                // If refresh token does not exist
+                SecurityContextHolder.clearContext();
             }
-            return null;
         }
+
+        filterChain.doFilter(request, response);
+    }
     }
