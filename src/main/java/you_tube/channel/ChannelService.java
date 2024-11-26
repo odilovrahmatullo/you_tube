@@ -100,4 +100,13 @@ public class ChannelService {
         List<ChannelEntity> usersChannelList = channelRepository.getChannels(email, ChannelStatus.ACTIVE);
         return usersChannelList.stream().map(item -> toDTO(item)).toList();
     }
+    public ChannelShortInfoDTO getInfo(String id){
+        ChannelDTO dto = getById(id);
+        ChannelShortInfoDTO shortInfoDTO = new ChannelShortInfoDTO();
+        shortInfoDTO.setId(dto.getId());
+        shortInfoDTO.setName(dto.getName());
+
+        shortInfoDTO.setPhoto(dto.getPhoto().getUrl());
+        return shortInfoDTO;
+    }
 }

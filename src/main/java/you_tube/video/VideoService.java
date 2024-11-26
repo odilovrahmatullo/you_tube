@@ -4,12 +4,21 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import you_tube.attach.service.AttachService;
+import you_tube.channel.ChannelDTO;
+import you_tube.channel.ChannelService;
 import you_tube.exceptionHandler.AppBadRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -18,6 +27,10 @@ public class VideoService {
     private VideoRepository videoRepository;
     @Autowired
     private EntityManager entityManager;
+    @Autowired
+    private AttachService attachService;
+    @Autowired
+    private ChannelService channelService;
 
     public VideoDTO create(VideoDTO dto) {
         VideoEntity entity = new VideoEntity();
@@ -110,5 +123,22 @@ public class VideoService {
 
     public void viewCount(String videoId) {
         videoRepository.viewCount(videoId);
+    }
+
+    public Page<VideoShortInfoDTO> getByCategoryId(Integer categoryId, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<VideoEntity> pageList = videoRepository.getVideos(categoryId,pageable);
+        List<VideoShortInfoDTO> infoDTOList =  pageList.stream().map(item -> mapperToInfo(item)).toList();
+        return new PageImpl<>(infoDTOList,pageable,pageList.getTotalPages());
+    }
+
+    public VideoShortInfoDTO mapperToInfo(VideoEntity entity){
+        VideoShortInfoDTO dto = new VideoShortInfoDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setViewCount(entity.getViewCount());
+        dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
+        dto.setChannel(channelService.getInfo(entity.getChannelId()));
+        return dto;
     }
 }

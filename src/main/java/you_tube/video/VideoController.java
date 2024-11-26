@@ -38,4 +38,12 @@ public class VideoController {
         videoService.viewCount(videoId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("byCategory/{categoryId}")
+    public ResponseEntity<?> getByCategoryId(@PathVariable Integer categoryId,
+                                             @RequestParam(defaultValue="1") Integer page,
+                                             @RequestParam(defaultValue = "5") Integer size){
+        page = Math.max(page-1,0);
+        return ResponseEntity.ok(videoService.getByCategoryId(categoryId,page,size));
+    }
 }
