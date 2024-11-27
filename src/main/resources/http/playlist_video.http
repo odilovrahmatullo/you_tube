@@ -1,5 +1,12 @@
 ### add video by playlist
-POST localhost:8081/playlist-video
+POST localhost:8080/playlist-video
 Content-Type: application/json
 
+{
+  "playlistId": 2,
+  "videoId": "2",
+  "orderNumber": 1
+}
+
+###
 
