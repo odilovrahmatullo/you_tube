@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import you_tube.exceptionHandler.AppBadException;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.profile.dto.CreateProfile;
 import you_tube.profile.dto.JwtDTO;
 import you_tube.profile.dto.ProfileDTO;

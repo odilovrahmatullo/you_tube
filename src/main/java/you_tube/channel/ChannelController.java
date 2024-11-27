@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import you_tube.profile.dto.JwtDTO;
-import you_tube.profile.enums.ProfileRole;
-import you_tube.utils.JwtUtil;
+
 
 @RestController
 @RequestMapping("/channel")
@@ -18,36 +16,23 @@ public class ChannelController {
 
     @PostMapping
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> create(@Valid @RequestBody ChannelDTO dto,
-                                    @RequestHeader("Authorization") String token) {
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        return ResponseEntity.ok(channelService.create(dto, jwtDTO.getEmail()));
+    public ResponseEntity<?> create(@Valid @RequestBody ChannelDTO dto) {
+        return ResponseEntity.ok(channelService.create(dto));
     }
 
     @PutMapping("/update/photo/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> updatePhoto(@PathVariable String id,
-                                         @NotNull @RequestParam String photoId,
-                                         @RequestHeader("Authorization") String token) {
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
+                                         @NotNull @RequestParam String photoId) {
             return ResponseEntity.ok(channelService.updatePhoto(id, photoId));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
+
     }
 
     @PutMapping("/update/banner/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('OWNER')")
     public ResponseEntity<?> updateBanner(@PathVariable String id,
-                                          @NotNull @RequestParam String bannerId,
-                                          @RequestHeader("Authorization") String token) {
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        if (jwtDTO.getRole().equals(ProfileRole.ROLE_USER.name()) || jwtDTO.getRole().equals(ProfileRole.ROLE_OWNER.name())) {
+                                          @NotNull @RequestParam String bannerId) {
             return ResponseEntity.ok(channelService.updateBanner(id, bannerId));
-        } else {
-            return ResponseEntity.status(403).build();
-        }
     }
 
     @PutMapping("/update/chanel-info/{id}")
@@ -78,9 +63,8 @@ public class ChannelController {
     }
 
     @GetMapping("users-channel")
-    public ResponseEntity<?> getUsersChannelList(@RequestHeader("Authorization") String token){
-        JwtDTO jwtDTO = JwtUtil.decode(token.substring(7));
-        return ResponseEntity.ok(channelService.getUsersChannel(jwtDTO.getEmail()));
+    public ResponseEntity<?> getUsersChannelList(){
+        return ResponseEntity.ok(channelService.getUsersChannel());
     }
 
 }

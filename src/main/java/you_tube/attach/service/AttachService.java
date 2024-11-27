@@ -19,7 +19,7 @@ import you_tube.attach.dtos.AttachDTO;
 import you_tube.attach.dtos.AttachSimpleDTO;
 import you_tube.attach.entity.AttachEntity;
 import you_tube.attach.repository.AttachRepository;
-import you_tube.exceptionHandler.ResourceNotFoundException;
+import you_tube.exceptionhandler.ResourceNotFoundException;
 
 
 import java.io.File;

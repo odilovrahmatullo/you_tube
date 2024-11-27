@@ -1,7 +1,7 @@
 package you_tube.category.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import you_tube.exceptionHandler.AppBadException;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.category.dto.CategoryDTO;
 import you_tube.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

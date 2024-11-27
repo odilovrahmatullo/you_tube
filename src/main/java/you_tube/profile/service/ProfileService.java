@@ -3,7 +3,7 @@ package you_tube.profile.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import you_tube.exceptionHandler.AppBadException;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.history.service.EmailSendingService;
 import you_tube.profile.dto.CreateProfile;
 import you_tube.profile.dto.JwtDTO;
