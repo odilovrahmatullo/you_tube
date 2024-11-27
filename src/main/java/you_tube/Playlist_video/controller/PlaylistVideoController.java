@@ -7,13 +7,13 @@ import you_tube.Playlist_video.dto.PlaylistVideoDTO;
 import you_tube.Playlist_video.service.PlaylistVideoService;
 
 @RestController
-@RequestMapping("playlist-video")
+@RequestMapping("/playlist-video")
 public class PlaylistVideoController {
     @Autowired
     private PlaylistVideoService playlistVideoService;
 
     @PostMapping("")
-    public ResponseEntity<?> crate(PlaylistVideoDTO playlistVideoDTO){
+    public ResponseEntity<?> create(PlaylistVideoDTO playlistVideoDTO){
         PlaylistVideoDTO dto = playlistVideoService.addVideoByPlaylist(playlistVideoDTO);
         return ResponseEntity.ok(dto);
     }

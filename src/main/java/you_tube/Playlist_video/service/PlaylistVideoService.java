@@ -8,6 +8,8 @@ import you_tube.Playlist_video.repository.PlaylistVideoRepository;
 import you_tube.exceptionHandler.AppBadException;
 import you_tube.video.VideoDTO;
 import you_tube.video.VideoEntity;
+import you_tube.video.VideoService;
+import you_tube.video.VideoShortInfoDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PlaylistVideoService {
     private final PlaylistVideoRepository playlistVideoRepository;
+    private final VideoService videoService;
 
     public PlaylistVideoDTO addVideoByPlaylist(PlaylistVideoDTO playlistVideoDTO) {
         PlaylistVideoEntity entity = new PlaylistVideoEntity();
@@ -62,19 +65,17 @@ public class PlaylistVideoService {
         }
     }
 
-    public List<VideoDTO> getPlaylistVideos(Integer playlistId) {
+    public List<VideoShortInfoDTO> getPlaylistVideos(Integer playlistId) {
         List<VideoEntity> entity = playlistVideoRepository.findAllVideosByPlaylistId(playlistId);
         if(entity != null){
             throw new AppBadException("No videos in the playlist");
         }
-        List<VideoDTO> videos = new ArrayList<>();
+        List<VideoShortInfoDTO> videoList = new ArrayList<>();
         for(VideoEntity video : entity) {
-
-
-
+            videoList.add(videoService.mapperToInfo(video));
         }
 
-        return null;
+        return videoList;
     }
 
 
