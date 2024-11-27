@@ -23,4 +23,9 @@ public class VideoTagController {
                                    @RequestParam(name = "videoId") String videoId){
         return ResponseEntity.ok(videoTagService.delete(tagId,videoId));
     }
+
+    @GetMapping("/{videoId}")
+    public ResponseEntity<?> get(@PathVariable String videoId){
+        return ResponseEntity.ok(videoTagService.get(videoId));
+    }
 }

@@ -2,6 +2,7 @@ package you_tube.tag.service;
 
 import you_tube.exceptionhandler.AppBadRequest;
 import you_tube.tag.dto.TagDTO;
+import you_tube.tag.dto.TagShortInfo;
 import you_tube.tag.entity.TagEntity;
 import you_tube.tag.repository.TagRepository;
 import lombok.AllArgsConstructor;
@@ -64,5 +65,16 @@ public class TagService {
             dtoList.add(dto);
         }
         return dtoList;
+    }
+
+    public TagEntity getById(Integer id){
+        return tagRepository.findByIdAndVisibleTrue(id);
+    }
+
+    public TagShortInfo getDTO(Integer id){
+        TagShortInfo dto = new TagShortInfo();
+        dto.setTagId(id);
+        dto.setName(getById(id).getName());
+        return dto;
     }
 }

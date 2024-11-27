@@ -30,7 +30,7 @@ public class SpringSecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public static final String [] AUTH_WHITELIST = {
-            "/api/auth/login", "video/**"
+            "/api/auth/login", "video/**", "/video-tag/**"
     };
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -50,7 +50,6 @@ public class SpringSecurityConfig {
                     .requestMatchers("attach/**").permitAll()
                     .requestMatchers("/api/playlist/**").permitAll()
                     .requestMatchers("/api/email/confirm/**").permitAll()
-
 
                     .anyRequest()
                     .authenticated();
