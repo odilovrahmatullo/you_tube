@@ -20,4 +20,8 @@ public class VideoTagService {
         }
         return dto;
     }
+
+    public String delete(Integer tagId, String videoId) {
+        return "DELETED "+videoTagRepository.deleteVideoTag(tagId,videoId);
+    }
 }

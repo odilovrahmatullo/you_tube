@@ -7,3 +7,7 @@ Content-Type: application/json
   "videoId": "530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4",
   "tagIds": [1,2]
 }
+
+### DELETE
+DELETE localhost:8080/video-tag?tagId=1&videoId=b3b7bda3-a67a-4c3e-80fa-dafd772c800c.mp4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI3MjExMDcsImV4cCI6MTczMjgwNzUwN30.DAzc0JxmfL5x3nQW995YwEar9aDobWU9Gi7sFkR2bnk
