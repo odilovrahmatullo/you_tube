@@ -3,7 +3,7 @@ package you_tube.category.service;
 import you_tube.category.dto.CategoryDTO;
 import you_tube.category.entity.CategoryEntity;
 import you_tube.category.repository.CategoryRepository;
-import you_tube.exceptionHandler.AppBadRequest;
+import you_tube.exceptionhandler.AppBadRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

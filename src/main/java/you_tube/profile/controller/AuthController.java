@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import you_tube.exceptionHandler.AppBadException;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.profile.dto.AuthDTO;
 import you_tube.profile.dto.ProfileDTO;
 import you_tube.profile.dto.RegistrationDTO;

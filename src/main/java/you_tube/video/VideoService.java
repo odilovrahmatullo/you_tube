@@ -11,15 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import you_tube.attach.service.AttachService;
-import you_tube.channel.ChannelDTO;
 import you_tube.channel.ChannelService;
 import you_tube.config.CustomUserDetails;
-import you_tube.exceptionHandler.AppBadRequest;
+import you_tube.exceptionhandler.AppBadRequest;
 import you_tube.utils.SpringSecurityUtil;
-import you_tube.video_watched.service.VideoWatchedService;
+import you_tube.videowatched.service.VideoWatchedService;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

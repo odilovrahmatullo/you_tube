@@ -1,6 +1,6 @@
 package you_tube.tag.service;
 
-import you_tube.exceptionHandler.AppBadRequest;
+import you_tube.exceptionhandler.AppBadRequest;
 import you_tube.tag.dto.TagDTO;
 import you_tube.tag.entity.TagEntity;
 import you_tube.tag.repository.TagRepository;
