@@ -2,12 +2,10 @@ package you_tube.videowatched.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import you_tube.exceptionHandler.AppBadException;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.profile.dto.ProfileDTO;
 import you_tube.profile.service.ProfileService;
 import you_tube.video.*;
-import you_tube.video_watched.entity.VideoWatchedEntity;
-import you_tube.video_watched.repository.VideoWatchedRepository;
 import you_tube.videowatched.entity.VideoWatchedEntity;
 import you_tube.videowatched.repository.VideoWatchedRepository;
 

@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import you_tube.exceptionHandler.AppBadException;
-import you_tube.video_watched.service.VideoWatchedService;
+import you_tube.exceptionhandler.AppBadException;
 import you_tube.videowatched.service.VideoWatchedService;
 
 @RestController
