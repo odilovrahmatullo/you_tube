@@ -2,6 +2,8 @@ package you_tube.playlistvideo.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import you_tube.playlist.dto.PlayListInfoDTO;
+import you_tube.playlist.dto.PlayListShortInfoDTO;
 import you_tube.playlistvideo.dto.PlaylistVideoDTO;
 import you_tube.playlistvideo.entity.PlaylistVideoEntity;
 import you_tube.playlistvideo.repository.PlaylistVideoRepository;
@@ -76,6 +78,11 @@ public class PlaylistVideoService {
 
         return null;
     }
+
+    public List<PlayListShortInfoDTO> getPlayList(String videoId) {
+        return playlistVideoRepository.getPlayListByVideoId(videoId);
+    }
+
 
 
 }
