@@ -1,11 +1,11 @@
-### UPLOAD ATTACH TO SERVICE
+### UPLOAD ATTACH TO SERVICE  video - 39526a43-cb60-43fb-94dd-1aee27dfac74.mp4  photo - b4591845-1272-461d-be03-61487a33726d.jpg
 POST http://localhost:8080/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="library.mp4"
+Content-Disposition: form-data; name="file"; filename="photo.jpg"
 
-< C:\Users\HP\Downloads\Telegram Desktop\library.mp4
+< C:/Users/zaxri/Downloads/photo.jpg
 
 
 ### OPEN ATTACH

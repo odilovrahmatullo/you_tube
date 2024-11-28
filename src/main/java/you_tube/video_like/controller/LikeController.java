@@ -12,26 +12,27 @@ import you_tube.video_like.service.LikeService;
 public class LikeController {
     @Autowired
     private LikeService likeService;
-
+// USER
     @PostMapping("/")
     public ResponseEntity<?> createLike(@RequestBody LikeDTO dto,
                                         @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(likeService.createLike(dto));
     }
-
+//  USER
     @PutMapping("/{id}")
     public ResponseEntity<?> deleteLike(@PathVariable String id) {
         return ResponseEntity.ok(likeService.deleteLike(id));
     }
-
+// USER
     @GetMapping("/")
     public ResponseEntity<?> getLike(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(likeService.gelAllLike());
+        return ResponseEntity.ok(likeService.getAllLike());
     }
 
-    @GetMapping("/{id}")
+//    ADMIN
+    @GetMapping("/admin/{id}")
     public ResponseEntity<?> getAllLike(@PathVariable Integer id) {
-        return ResponseEntity.ok(likeService.getAdminAll(id));
+        return ResponseEntity.ok(likeService.getAllAdminVideoLike(id));
     }
 
     @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
