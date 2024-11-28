@@ -67,4 +67,12 @@ public class VideoController {
         page = Math.max(page-1,0);
         return ResponseEntity.ok(videoService.getVideoList(page,size));
     }
+
+    @GetMapping("/channel/{channelId}/videos")
+    public ResponseEntity<?> getChannelList (@RequestParam Integer page,
+                                             @RequestParam Integer size,
+                                             @PathVariable String channelId){
+        page = Math.max(page-1,0);
+        return ResponseEntity.ok(videoService.getChannelList(page,size,channelId));
+    }
 }

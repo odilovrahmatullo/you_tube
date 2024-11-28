@@ -31,5 +31,9 @@ public interface VideoRepository extends CrudRepository<VideoEntity, String>,
     @Query("FROM VideoEntity where title ILIKE ?1 and visible = true order by createdDate desc")
     List<VideoEntity> getByTitle(String title);
 
-    List<VideoEntity> findAllByVisibleTrue(Pageable pageable);
+    @Query("FROM VideoEntity order by createdDate desc ")
+    Page<VideoEntity> findAllByVisibleTrue(Pageable pageable);
+
+    @Query("FROM VideoEntity where channelId = ?1 and visible = true order by createdDate desc ")
+    Page<VideoEntity> getVideosByChannelId(String channelId,Pageable pageable);
 }

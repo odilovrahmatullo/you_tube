@@ -172,10 +172,11 @@ public class VideoService {
         return entityList.stream().map(item -> mapperToInfo(item)).toList();
     }
 
-    public List<VideoMixDTO> getVideoList(Integer page, Integer size) {
+    public PageImpl<VideoMixDTO> getVideoList(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<VideoEntity> videoEntities = videoRepository.findAllByVisibleTrue(pageable);
-        return videoEntities.stream().map(item -> mapperToMix(item)).toList();
+        Page<VideoEntity> videoEntities = videoRepository.findAllByVisibleTrue(pageable);
+        List<VideoMixDTO> videoMixDTOS = videoEntities.stream().map(item -> mapperToMix(item)).toList();
+        return new PageImpl<>(videoMixDTOS,pageable,videoEntities.getTotalPages());
     }
 
     public VideoMixDTO mapperToMix(VideoEntity entity) {
@@ -187,6 +188,23 @@ public class VideoService {
         profileDTO.setName(entity.getChannel().getProfile().getName());
         profileDTO.setSurname(entity.getChannel().getProfile().getSurname());
         dto.setProfileShortDTO(profileDTO);
+        return dto;
+    }
+
+    public PageImpl<VideoPlayListInfoDTO> getChannelList(Integer page, Integer size, String channelId) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<VideoEntity> videoEntities = videoRepository.getVideosByChannelId(channelId,pageable);
+        List<VideoPlayListInfoDTO> results = videoEntities.stream().map(item -> mapperToVideoPlayList(item)).toList();
+        return new PageImpl<>(results,pageable,videoEntities.getTotalPages());
+    }
+
+    public VideoPlayListInfoDTO mapperToVideoPlayList(VideoEntity entity){
+        VideoPlayListInfoDTO dto = new VideoPlayListInfoDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
+        dto.setViewCount(entity.getViewCount());
+        dto.setPublishedDate(entity.getPublishedDate());
         return dto;
     }
 }

@@ -45,3 +45,6 @@ GET localhost:8080/video/tag/2?page=1&size=2
 ### Get all
 GET localhost:8080/video/all?page=1&size=5
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjcyMjA4MywiZXhwIjoxNzMyODA4NDgzfQ.O1snDQ31F2bRazAKVfNKaNegtfnuH8QyTClwit6-G1s
+
+### GET channel videos
+GET localhost:8080/video/channel/d6142e7c-7876-455d-b4c8-a3e916b31711/videos?page=1&size=1
