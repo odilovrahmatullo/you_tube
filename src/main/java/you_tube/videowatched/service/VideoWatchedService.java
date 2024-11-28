@@ -2,8 +2,9 @@ package you_tube.videowatched.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import you_tube.attach.service.AttachService;
+import you_tube.channel.ChannelService;
 import you_tube.exceptionhandler.AppBadException;
-import you_tube.profile.dto.ProfileDTO;
 import you_tube.profile.service.ProfileService;
 import you_tube.video.*;
 import you_tube.videowatched.entity.VideoWatchedEntity;
@@ -20,7 +21,10 @@ public class VideoWatchedService {
     @Autowired
     private ProfileService profileService;
     @Autowired
-    private VideoService videoService;
+    private AttachService attachService;
+    @Autowired
+    private ChannelService channelService;
+
 
     public void createVideoWatched(Integer profileId,String videoId){
         VideoWatchedEntity videoWatchedEntity = new VideoWatchedEntity();
@@ -38,9 +42,18 @@ public class VideoWatchedService {
             throw new AppBadException("No videos found");
         }
         for (VideoEntity videoEntity : byProfileId) {
-            VideoShortInfoDTO videoShortInfoDTO = videoService.mapperToInfo(videoEntity);
+            VideoShortInfoDTO videoShortInfoDTO = mapperToInfo(videoEntity);
             videoDTOList.add(videoShortInfoDTO);
         }
         return videoDTOList;
+    }
+    public VideoShortInfoDTO mapperToInfo(VideoEntity entity){
+        VideoShortInfoDTO dto = new VideoShortInfoDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setViewCount(entity.getViewCount());
+        dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
+        dto.setChannel(channelService.getInfo(entity.getChannelId()));
+        return dto;
     }
 }
