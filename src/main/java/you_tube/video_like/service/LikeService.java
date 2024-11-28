@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LikeService {
@@ -27,11 +28,17 @@ public class LikeService {
     @Autowired
     private VideoRepository videoRepository;
 
-    public Boolean createLike(LikeDTO dto) {
+    public String createLike(LikeDTO dto) {
         CustomUserDetails currentUser = SpringSecurityUtil.getCurrentUser();
         Optional<VideoEntity> byId = videoRepository.findById(dto.getVideo_id());
         if (byId.isEmpty()) {
             throw new AppBadException("video not exist");
+        }
+        LikeEntity byVideoIdAndAndProfileId = likeRepository.findByVideoIdAndAndProfileId(dto.getVideo_id(), currentUser.getId());
+        if (!(byVideoIdAndAndProfileId == null)){
+            byVideoIdAndAndProfileId.setType(LikeType.REMOVED);
+            likeRepository.save(byVideoIdAndAndProfileId);
+            return "STATUS REMOVED";
         }
         LikeEntity likeEntity = new LikeEntity();
         likeEntity.setProfileId(currentUser.getId());
@@ -39,7 +46,7 @@ public class LikeService {
         likeEntity.setType(LikeType.LIKE);
         likeEntity.setCreatedDate(LocalDateTime.now());
         likeRepository.save(likeEntity);
-        return true;
+        return "STATUS LIKE";
     }
     public String deleteLike(String id) {
         CustomUserDetails currentUser = SpringSecurityUtil.getCurrentUser();
@@ -47,58 +54,53 @@ public class LikeService {
         if (byProfileIdAndChannelId == null) {
             throw new AppBadException("like not exist");
         }
-        likeRepository.delete(byProfileIdAndChannelId);
-        return "success";
+        byProfileIdAndChannelId.setType(LikeType.REMOVED);
+        return "REMOVED";
     }
 
-    public List<VideoLikeInfoDTO> gelAllLike() {
+
+
+    public List<VideoLikeInfoDTO> getAllLike() {
         CustomUserDetails currentUser = SpringSecurityUtil.getCurrentUser();
-        List<LikeEntity> allVideoLike = likeRepository.getAllVideoLike(currentUser.getId());
-        if (allVideoLike.isEmpty()) {
-            throw new AppBadException("like not exist");
+        List<LikeEntity> likeEntities = likeRepository.getAllVideoLike(currentUser.getId());
+        if (likeEntities.isEmpty()) {
+            throw new AppBadException("Like not exist");
         }
-        List<VideoLikeInfoDTO> allVideoLikeInfoDTO = new ArrayList<>();
-        for (LikeEntity likeEntity : allVideoLike) {
-            VideoLikeInfoDTO videoLikeInfoDTO = new VideoLikeInfoDTO();
-            videoLikeInfoDTO.setId(likeEntity.getId());
+        List<VideoLikeInfoDTO> likeInfoDTOList = likeEntities.stream()
+                .map(this::toDTO) // DTO'ga o‘tkazish
+                .collect(Collectors.toList());
 
-            VideoShortDTO videoShortDTO = new VideoShortDTO();
-            videoShortDTO.setId(likeEntity.getVideo().getId());
-            videoShortDTO.setName(likeEntity.getVideo().getTitle());
-
-            ChannelDTO channelDTO  = new ChannelDTO();
-            channelDTO.setId(likeEntity.getVideo().getChannel().getId());
-            channelDTO.setName(likeEntity.getVideo().getChannel().getName());
-            videoShortDTO.setChannel(channelDTO);
-
-            videoLikeInfoDTO.setVideo(videoShortDTO);
-            allVideoLikeInfoDTO.add(videoLikeInfoDTO);
-        }
-        return allVideoLikeInfoDTO;
+        return likeInfoDTOList;
     }
 
-    public Object getAdminAll(Integer id) {
-        List<LikeEntity> allVideoLike = likeRepository.getAllVideoLike(id);
-        if (allVideoLike.isEmpty()) {
-            throw new AppBadException("like not exist");
+    public List<VideoLikeInfoDTO> getAllAdminVideoLike(Integer profileId) {
+        List<LikeEntity> likeEntities = likeRepository.getAllVideoLike(profileId);
+        if (likeEntities.isEmpty()) {
+            throw new AppBadException("Like not exist");
         }
-        List<VideoLikeInfoDTO> allVideoLikeInfoDTO = new ArrayList<>();
-        for (LikeEntity likeEntity : allVideoLike) {
-            VideoLikeInfoDTO videoLikeInfoDTO = new VideoLikeInfoDTO();
-            videoLikeInfoDTO.setId(likeEntity.getId());
+        List<VideoLikeInfoDTO> likeInfoDTOList = likeEntities.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
 
-            VideoShortDTO videoShortDTO = new VideoShortDTO();
-            videoShortDTO.setId(likeEntity.getVideo().getId());
-            videoShortDTO.setName(likeEntity.getVideo().getTitle());
-
-            ChannelDTO channelDTO  = new ChannelDTO();
-            channelDTO.setId(likeEntity.getVideo().getChannel().getId());
-            channelDTO.setName(likeEntity.getVideo().getChannel().getName());
-            videoShortDTO.setChannel(channelDTO);
-
-            videoLikeInfoDTO.setVideo(videoShortDTO);
-            allVideoLikeInfoDTO.add(videoLikeInfoDTO);
-        }
-        return allVideoLikeInfoDTO;
+        return likeInfoDTOList;
     }
+
+
+    public VideoLikeInfoDTO toDTO(LikeEntity likeEntity) {
+        VideoLikeInfoDTO dto = new VideoLikeInfoDTO();
+        dto.setId(likeEntity.getId());
+
+        VideoShortDTO videoShortDTO = new VideoShortDTO();
+        videoShortDTO.setId(likeEntity.getVideo().getId());
+        videoShortDTO.setName(likeEntity.getVideo().getTitle());
+
+        ChannelDTO channelDTO = new ChannelDTO();
+        channelDTO.setId(likeEntity.getVideo().getChannel().getId());
+        channelDTO.setName(likeEntity.getVideo().getChannel().getName());
+        videoShortDTO.setChannel(channelDTO);
+
+        dto.setVideo(videoShortDTO);
+        return dto;
+    }
+
 }

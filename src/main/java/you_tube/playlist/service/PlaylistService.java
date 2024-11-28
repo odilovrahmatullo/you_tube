@@ -101,32 +101,32 @@ public class PlaylistService {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
 
         Page<PlayListEntity> entityList = playlistRepository.getAll6(pageRequest);
-        Long total = entityList.getTotalElements();
-        List<PlayListInfoDTO> dtoList = new LinkedList<>();
-        for (PlayListEntity entity : entityList) {
-            PlayListInfoDTO playListInfoDTO = new PlayListInfoDTO();
-            playListInfoDTO.setId(entity.getId());
-            playListInfoDTO.setName(entity.getName());
-            playListInfoDTO.setDescription(entity.getDescription());
-            playListInfoDTO.setStatus(entity.getStatus());
 
-            GetProfileDTO getProfileDTO =new GetProfileDTO();
-            getProfileDTO.setId(entity.getChannel().getProfile().getId());
-            getProfileDTO.setName(entity.getChannel().getProfile().getName());
-            getProfileDTO.setSurname(entity.getChannel().getProfile().getSurname());
+        Page<PlayListInfoDTO> dtoPage = entityList.map(entity -> {
+            PlayListInfoDTO dto = new PlayListInfoDTO();
+            dto.setId(entity.getId());
+            dto.setName(entity.getName());
+            dto.setDescription(entity.getDescription());
+            dto.setStatus(entity.getStatus());
+
+            GetProfileDTO profileDTO = new GetProfileDTO();
+            profileDTO.setId(entity.getChannel().getProfile().getId());
+            profileDTO.setName(entity.getChannel().getProfile().getName());
+            profileDTO.setSurname(entity.getChannel().getProfile().getSurname());
+
             PhotoDTO photoDTO = new PhotoDTO();
             photoDTO.setId(entity.getChannel().getProfile().getPhoto());
             photoDTO.setUrl(attachService.getUrl(entity.getChannel().getProfile().getPhoto()));
-            getProfileDTO.setPhoto(photoDTO);
+            profileDTO.setPhoto(photoDTO);
 
-            playListInfoDTO.setProfile(getProfileDTO);
-            playListInfoDTO.setStatus(entity.getStatus());
-            playListInfoDTO.setChannel(entity.getChannel());
-            playListInfoDTO.setOrder_num(entity.getOrderNum());
-            dtoList.add(playListInfoDTO);
-        }
-        PageImpl page1 = new PageImpl<>(dtoList, pageRequest, total);
+            dto.setProfile(profileDTO);
+            dto.setChannel(entity.getChannel());
+            dto.setOrder_num(entity.getOrderNum());
 
-        return page1;
+            return dto;
+        });
+
+        return dtoPage;
     }
+
 }

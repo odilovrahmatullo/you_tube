@@ -1,11 +1,15 @@
 ### Create List
 POST localhost:8080/api/playlist/create/
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoicmVmcmVzaCIsInN1YiI6IlpheHJpZGRpbm92MTcwN0BnbWFpbC5jb20iLCJpYXQiOjE3MzIzNTMxODUsImV4cCI6MTczMDY1MDIxOH0.Pe3CexkMuoscEx366IcRf4WxB7U4rbgIPr1KyjCdqX8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjc5Nzg2NSwiZXhwIjoxNzMyODg0MjY1fQ.bF-r2iCgbVOV438JOSaeWEncIX59iC3kI-NsBcMwORE
 Content-Type: application/json
 
 {
-  "name": "Code uz",
+  "name": "test",
   "description": "Code uz stream",
-  "channel_id": 1,
+  "channel_id": "d5ad419e-4f4e-4195-840b-7272a5199810",
+  "status": "PUBLIC",
   "orderNum": 1
 }
+
+###
+GET localhost:8080/api/playlist/all-playlist?page=1&size=10
