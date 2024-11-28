@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface VideoRepository extends CrudRepository<VideoEntity, String>,
                                           PagingAndSortingRepository<VideoEntity, String> {
     @Query("select count(v) > 0 from VideoEntity v where v.id = ?1 and v.categoryId = ?2 and v.visible = true")
@@ -23,6 +25,11 @@ public interface VideoRepository extends CrudRepository<VideoEntity, String>,
     @Query("UPDATE VideoEntity set viewCount = viewCount + 1 where id = ?1")
     void viewCount(String videoId);
 
-    @Query("FROM VideoEntity where categoryId = ?1")
+    @Query("FROM VideoEntity where categoryId = ?1 order by createdDate desc")
     Page<VideoEntity> getVideos(Integer categoryId, Pageable pageable);
+
+    @Query("FROM VideoEntity where title ILIKE ?1 and visible = true order by createdDate desc")
+    List<VideoEntity> getByTitle(String title);
+
+    List<VideoEntity> findAllByVisibleTrue(Pageable pageable);
 }

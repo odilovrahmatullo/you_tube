@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.history.service.EmailSendingService;
-import you_tube.profile.dto.CreateProfile;
-import you_tube.profile.dto.JwtDTO;
-import you_tube.profile.dto.ProfileDTO;
+import you_tube.profile.dto.*;
 import you_tube.profile.enums.ProfileStatus;
 import you_tube.utils.JwtUtil;
-import you_tube.profile.dto.UpdateProfileDTO;
 import you_tube.profile.entity.ProfileEntity;
 import you_tube.profile.repository.ProfileRepository;
 
@@ -106,4 +103,6 @@ public class ProfileService {
                 "1px solid #007bff;\">Confirm</a> </body></html>";
 
     }
+
+
 }

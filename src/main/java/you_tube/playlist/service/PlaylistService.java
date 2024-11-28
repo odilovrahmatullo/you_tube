@@ -12,6 +12,7 @@ import you_tube.attach.service.AttachService;
 import you_tube.attach.service.ResourceBundleService;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.playlist.dto.CreatePlaylistDTO;
+import you_tube.playlist.dto.PlayListShortInfoDTO;
 import you_tube.playlist.dto.UpdateDTO;
 import you_tube.playlist.entity.PlayListEntity;
 import you_tube.playlist.enums.PlaylistStatus;
@@ -97,7 +98,7 @@ public class PlaylistService {
         throw new AppBadException("Does such a playlist exist?");
     }
 
-    public Page<PlayListInfoDTO> AllPage(int page, int size) {
+    public Page<PlayListInfoDTO> allPage(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
 
         Page<PlayListEntity> entityList = playlistRepository.getAll6(pageRequest);
@@ -128,5 +129,10 @@ public class PlaylistService {
         PageImpl page1 = new PageImpl<>(dtoList, pageRequest, total);
 
         return page1;
+    }
+
+
+    public PlayListEntity getById(Integer id){
+        return playlistRepository.findById(id).get();
     }
 }
