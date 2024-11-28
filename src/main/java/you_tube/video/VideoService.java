@@ -15,6 +15,7 @@ import you_tube.channel.ChannelService;
 import you_tube.config.CustomUserDetails;
 import you_tube.exceptionhandler.AppBadRequest;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.videotag.VideoTagService;
 import you_tube.videowatched.service.VideoWatchedService;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,8 @@ public class VideoService {
     private ChannelService channelService;
     @Autowired
     private VideoWatchedService videoWatchedService;
+    @Autowired
+    private VideoTagService videoTagService;
 
     public VideoDTO create(VideoDTO dto) {
         VideoEntity entity = new VideoEntity();
@@ -152,5 +155,10 @@ public class VideoService {
     public List<VideoShortInfoDTO>getByTitle(String title) {
         List<VideoEntity> videoEntities = videoRepository.getByTitle("%"+title+"%");
         return videoEntities.stream().map(item -> mapperToInfo(item)).toList();
+    }
+
+    public List<VideoShortInfoDTO>getByTagId(String tagId,String lang,Integer page, Integer size) {
+        List<VideoEntity> entityList = videoTagService.getVideosByTagId(tagId,lang,page,size);
+       return entityList.stream().map(item -> mapperToInfo(item)).toList();
     }
 }

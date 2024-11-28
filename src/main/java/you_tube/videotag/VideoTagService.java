@@ -1,8 +1,16 @@
 package you_tube.videotag;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import you_tube.attach.service.ResourceBundleService;
+import you_tube.exceptionhandler.ResourceNotFoundException;
 import you_tube.tag.service.TagService;
+import you_tube.video.VideoEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +21,9 @@ public class VideoTagService {
     private VideoTagRepository videoTagRepository;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
+
 
     public VideoTagDTO create(VideoTagDTO dto) {
         for (Integer i : dto.getTagIds()) {
@@ -40,5 +51,14 @@ public class VideoTagService {
         infoDTO.setVideoId(entity.getVideoId());
         infoDTO.setTag(tagService.getDTO(entity.getTagId()));
         return infoDTO;
+    }
+
+    public List<VideoEntity> getVideosByTagId(String tagId, String lang,Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<VideoEntity> videos = videoTagRepository.getByTagId(tagId,pageable);
+        if(videos.isEmpty()){
+            throw new ResourceNotFoundException(resourceBundleService.getMessage("videos.not.found",lang));
+        }
+        return videos.get().toList();
     }
 }

@@ -1,10 +1,10 @@
 package you_tube.video;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import you_tube.enums.AppLanguage;
 
 @RestController
 @RequestMapping("/video")
@@ -49,5 +49,14 @@ public class VideoController {
     @GetMapping("title/{title}")
     public ResponseEntity<?> getByTitle(@PathVariable String title){
         return ResponseEntity.ok(videoService.getByTitle(title));
+    }
+
+    @GetMapping("tag/{tagId}")
+    public ResponseEntity<?> getByTagId(@PathVariable String tagId,
+                                        @RequestParam Integer page,
+                                        @RequestParam Integer size,
+                                        @RequestHeader(value = "Accepted-Language", defaultValue = "uz") AppLanguage lang){
+        page = Math.max(page-1,0);
+        return ResponseEntity.ok(videoService.getByTagId(tagId,lang.name(),page,size));
     }
 }

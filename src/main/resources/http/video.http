@@ -38,3 +38,6 @@ GET localhost:8080/video/byCategory/1
 
 ### GET by title
 GET localhost:8080/video/title/kutubxona
+
+### GET by TagId
+GET localhost:8080/video/tag/2?page=1&size=2
