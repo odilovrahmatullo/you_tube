@@ -19,7 +19,6 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/upload")
-
     public ResponseEntity<AttachDTO> upload(@RequestParam("file") MultipartFile file,
                                             @RequestHeader(value = "Accepted-Language", defaultValue = "uz") AppLanguage lang){
        return ResponseEntity.ok(attachService.upload(file,lang.name()));
