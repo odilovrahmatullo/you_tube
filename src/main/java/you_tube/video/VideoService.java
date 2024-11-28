@@ -148,4 +148,9 @@ public class VideoService {
         dto.setChannel(channelService.getInfo(entity.getChannelId()));
         return dto;
     }
+
+    public List<VideoShortInfoDTO>getByTitle(String title) {
+        List<VideoEntity> videoEntities = videoRepository.getByTitle("%"+title+"%");
+        return videoEntities.stream().map(item -> mapperToInfo(item)).toList();
+    }
 }

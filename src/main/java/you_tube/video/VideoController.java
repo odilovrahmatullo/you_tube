@@ -46,4 +46,8 @@ public class VideoController {
         page = Math.max(page-1,0);
         return ResponseEntity.ok(videoService.getByCategoryId(categoryId,page,size));
     }
+    @GetMapping("title/{title}")
+    public ResponseEntity<?> getByTitle(@PathVariable String title){
+        return ResponseEntity.ok(videoService.getByTitle(title));
+    }
 }

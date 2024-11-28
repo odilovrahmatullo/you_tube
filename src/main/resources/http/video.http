@@ -35,3 +35,6 @@ PUT localhost:8080/video/view-count/530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4
 
 ### Get pagination by categoryId
 GET localhost:8080/video/byCategory/1
+
+### GET by title
+GET localhost:8080/video/title/kutubxona
