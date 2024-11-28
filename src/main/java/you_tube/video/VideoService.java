@@ -14,7 +14,12 @@ import you_tube.attach.service.AttachService;
 import you_tube.channel.ChannelService;
 import you_tube.config.CustomUserDetails;
 import you_tube.exceptionhandler.AppBadRequest;
+import you_tube.playlist.service.PlaylistService;
+import you_tube.playlistvideo.service.PlaylistVideoService;
+import you_tube.profile.dto.GetProfileDTO;
+import you_tube.profile.service.ProfileService;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.videotag.VideoTagService;
 import you_tube.videowatched.service.VideoWatchedService;
 
 import java.time.LocalDateTime;
@@ -34,6 +39,14 @@ public class VideoService {
     private ChannelService channelService;
     @Autowired
     private VideoWatchedService videoWatchedService;
+    @Autowired
+    private VideoTagService videoTagService;
+    @Autowired
+    private PlaylistService playlistService;
+    @Autowired
+    private PlaylistVideoService playlistVideoService;
+    @Autowired
+    private ProfileService profileService;
 
     public VideoDTO create(VideoDTO dto) {
         VideoEntity entity = new VideoEntity();
@@ -121,31 +134,77 @@ public class VideoService {
     }
 
     public String changeStatus(String videoId, VideoStatus status) {
-        return "UPDATED "+videoRepository.changeStatus(videoId,status);
+        return "UPDATED " + videoRepository.changeStatus(videoId, status);
     }
 
     public void viewCount(String videoId) {
         /*VideoWatched added*/
         CustomUserDetails currentUser = SpringSecurityUtil.getCurrentUser();
-        videoWatchedService.createVideoWatched(currentUser.getId(),videoId);
+        videoWatchedService.createVideoWatched(currentUser.getId(), videoId);
         /*View Count*/
         videoRepository.viewCount(videoId);
     }
 
     public Page<VideoShortInfoDTO> getByCategoryId(Integer categoryId, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page,size);
-        Page<VideoEntity> pageList = videoRepository.getVideos(categoryId,pageable);
-        List<VideoShortInfoDTO> infoDTOList =  pageList.stream().map(item -> mapperToInfo(item)).toList();
-        return new PageImpl<>(infoDTOList,pageable,pageList.getTotalPages());
+        Pageable pageable = PageRequest.of(page, size);
+        Page<VideoEntity> pageList = videoRepository.getVideos(categoryId, pageable);
+        List<VideoShortInfoDTO> infoDTOList = pageList.stream().map(item -> mapperToInfo(item)).toList();
+        return new PageImpl<>(infoDTOList, pageable, pageList.getTotalPages());
     }
 
-    public VideoShortInfoDTO mapperToInfo(VideoEntity entity){
+    public VideoShortInfoDTO mapperToInfo(VideoEntity entity) {
         VideoShortInfoDTO dto = new VideoShortInfoDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setViewCount(entity.getViewCount());
         dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
         dto.setChannel(channelService.getInfo(entity.getChannelId()));
+        return dto;
+    }
+
+    public List<VideoShortInfoDTO> getByTitle(String title) {
+        List<VideoEntity> videoEntities = videoRepository.getByTitle("%" + title + "%");
+        return videoEntities.stream().map(item -> mapperToInfo(item)).toList();
+    }
+
+    public List<VideoShortInfoDTO> getByTagId(String tagId, String lang, Integer page, Integer size) {
+        List<VideoEntity> entityList = videoTagService.getVideosByTagId(tagId, lang, page, size);
+        return entityList.stream().map(item -> mapperToInfo(item)).toList();
+    }
+
+    public PageImpl<VideoMixDTO> getVideoList(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<VideoEntity> videoEntities = videoRepository.findAllByVisibleTrue(pageable);
+        List<VideoMixDTO> videoMixDTOS = videoEntities.stream().map(item -> mapperToMix(item)).toList();
+        return new PageImpl<>(videoMixDTOS,pageable,videoEntities.getTotalPages());
+    }
+
+    public VideoMixDTO mapperToMix(VideoEntity entity) {
+        VideoMixDTO dto = new VideoMixDTO();
+        dto.setVideoShortInfoDTO(mapperToInfo(entity));
+        dto.setPlayListShortInfoDTO(playlistVideoService.getPlayList(entity.getId()));
+        GetProfileDTO profileDTO = new GetProfileDTO();
+        profileDTO.setId(entity.getChannel().getProfileId());
+        profileDTO.setName(entity.getChannel().getProfile().getName());
+        profileDTO.setSurname(entity.getChannel().getProfile().getSurname());
+        dto.setProfileShortDTO(profileDTO);
+        return dto;
+    }
+
+    public PageImpl<VideoPlayListInfoDTO> getChannelList(Integer page, Integer size, String channelId) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<VideoEntity> videoEntities = videoRepository.getVideosByChannelId(channelId,pageable);
+        List<VideoPlayListInfoDTO> results = videoEntities.stream().map(item -> mapperToVideoPlayList(item)).toList();
+        return new PageImpl<>(results,pageable,videoEntities.getTotalPages());
+    }
+
+    public VideoPlayListInfoDTO mapperToVideoPlayList(VideoEntity entity){
+        VideoPlayListInfoDTO dto = new VideoPlayListInfoDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
+        dto.setViewCount(entity.getViewCount());
+        dto.setPublishedDate(entity.getPublishedDate());
         return dto;
     }
 }

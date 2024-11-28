@@ -1,5 +1,6 @@
 ### Create List
 POST localhost:8080/api/playlist/create/
+
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjc5Nzg2NSwiZXhwIjoxNzMyODg0MjY1fQ.bF-r2iCgbVOV438JOSaeWEncIX59iC3kI-NsBcMwORE
 Content-Type: application/json
 
@@ -13,3 +14,14 @@ Content-Type: application/json
 
 ###
 GET localhost:8080/api/playlist/all-playlist?page=1&size=10
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjcyMjA4MywiZXhwIjoxNzMyODA4NDgzfQ.O1snDQ31F2bRazAKVfNKaNegtfnuH8QyTClwit6-G1s
+Content-Type: application/json
+
+{
+  "name": "iamman",
+  "description": "Code uz stream",
+  "channel_id": "d6142e7c-7876-455d-b4c8-a3e916b31711",
+  "orderNum": 2
+}
+
