@@ -59,4 +59,12 @@ public class VideoController {
         page = Math.max(page-1,0);
         return ResponseEntity.ok(videoService.getByTagId(tagId,lang.name(),page,size));
     }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getVideoList (@RequestParam Integer page,
+                                           @RequestParam Integer size){
+        page = Math.max(page-1,0);
+        return ResponseEntity.ok(videoService.getVideoList(page,size));
+    }
 }
