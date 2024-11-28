@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import you_tube.exceptionHandler.ResourceNotFoundException;
+import you_tube.exceptionhandler.ResourceNotFoundException;
 import you_tube.profile.entity.ProfileEntity;
 import you_tube.profile.repository.ProfileRepository;
 

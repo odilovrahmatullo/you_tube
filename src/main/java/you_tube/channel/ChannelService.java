@@ -1,16 +1,14 @@
 package you_tube.channel;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import you_tube.attach.service.AttachService;
 import you_tube.profile.service.ProfileService;
+import you_tube.utils.SpringSecurityUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,13 +22,13 @@ public class ChannelService {
     @Autowired
     private AttachService attachService;
 
-    public ChannelDTO create(ChannelDTO dto, String email) {
+    public ChannelDTO create(ChannelDTO dto) {
         ChannelEntity entity = new ChannelEntity();
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setBannerId(dto.getBannerId());
         entity.setPhotoId(dto.getPhotoId());
-        entity.setProfileId(profileService.getByEmail(email).getId());
+        entity.setProfileId(SpringSecurityUtil.getCurrentUserId());
         entity.setStatus(ChannelStatus.ACTIVE);
         entity.setCreatedDate(LocalDateTime.now());
         channelRepository.save(entity);
@@ -84,9 +82,9 @@ public class ChannelService {
         dto.setDescription(entity.getDescription());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
-        dto.setProfile(profileService.getById(entity.getProfileId()));
         dto.setBanner(attachService.getDTO(entity.getBannerId()));
         dto.setPhoto(attachService.getDTO(entity.getPhotoId()));
+        dto.setProfile(profileService.getById(entity.getProfileId()));
         return dto;
     }
 
@@ -96,8 +94,8 @@ public class ChannelService {
 
     }
 
-    public List<ChannelDTO> getUsersChannel(String email) {
-        List<ChannelEntity> usersChannelList = channelRepository.getChannels(email, ChannelStatus.ACTIVE);
+    public List<ChannelDTO> getUsersChannel() {
+        List<ChannelEntity> usersChannelList = channelRepository.getChannels(SpringSecurityUtil.getCurrentUser().getUsername(), ChannelStatus.ACTIVE);
         return usersChannelList.stream().map(item -> toDTO(item)).toList();
     }
     public ChannelShortInfoDTO getInfo(String id){
@@ -105,7 +103,6 @@ public class ChannelService {
         ChannelShortInfoDTO shortInfoDTO = new ChannelShortInfoDTO();
         shortInfoDTO.setId(dto.getId());
         shortInfoDTO.setName(dto.getName());
-
         shortInfoDTO.setPhoto(dto.getPhoto().getUrl());
         return shortInfoDTO;
     }

@@ -13,13 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import you_tube.profile.dto.JwtDTO;
 import you_tube.utils.JwtUtil;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 @Configuration
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
