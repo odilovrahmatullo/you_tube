@@ -23,6 +23,7 @@ import you_tube.exceptionhandler.ResourceNotFoundException;
 import you_tube.playlistvideo.service.PlaylistVideoService;
 import you_tube.profile.dto.GetProfileDTO;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.video_like.service.LikeService;
 import you_tube.videotag.VideoTagService;
 import you_tube.videowatched.service.VideoWatchedService;
 
@@ -50,6 +51,8 @@ public class VideoService {
     private PlaylistVideoService playlistVideoService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private LikeService likeService;
 
 
     public VideoDTO create(VideoDTO dto) {
@@ -245,6 +248,7 @@ public class VideoService {
         dto.setChannel(channelService.getInfo(entity.getChannelId()));
         dto.setCategory(categoryService.getDTO(entity.getCategoryId()));
         dto.setTag(videoTagService.tags(entity.getId()));
+        dto.setLike(likeService.getLikeInfo(entity.getId()));
         dto.setSharedCount(entity.getSharedCount());
         dto.setViewCount(entity.getViewCount());
         dto.setPublishedDate(entity.getPublishedDate());

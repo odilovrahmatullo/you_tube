@@ -6,6 +6,7 @@ import you_tube.attach.dtos.AttachSimpleDTO;
 import you_tube.category.dto.SimpleCategoryDTO;
 import you_tube.channel.ChannelShortInfoDTO;
 import you_tube.tag.dto.TagShortInfo;
+import you_tube.video_like.dto.LikeInfoDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,6 +21,7 @@ public class VideoFullInfoDTO {
     private AttachSimpleDTO attach;
     private SimpleCategoryDTO category;
     private List<TagShortInfo> tag;
+    private LikeInfoDTO like;
     private ChannelShortInfoDTO channel;
     private long viewCount;
     private long sharedCount;
