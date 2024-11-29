@@ -34,5 +34,6 @@ public class LikeEntity {
     @Column(name = "create_date")
     private LocalDateTime createdDate;
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private LikeType type;
 }

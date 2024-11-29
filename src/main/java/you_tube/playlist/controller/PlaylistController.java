@@ -19,7 +19,7 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/create/")
     public ResponseEntity<?> createPlaylist(@RequestBody @Valid CreatePlaylistDTO dto){
         return ResponseEntity.ok(playlistService.create(dto));
@@ -40,7 +40,7 @@ public class PlaylistController {
         return ResponseEntity.ok(playlistService.deleted(id));
     }
 
-    @GetMapping("/all-playlist/")
+    @GetMapping("/all-playlist")
     private ResponseEntity<?> pagination(@RequestParam(value = "page", defaultValue = "1") int page,
                                          @RequestParam(value = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(playlistService.allPage(page - 1, size));
