@@ -9,10 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import you_tube.attach.service.ResourceBundleService;
 import you_tube.exceptionhandler.ResourceNotFoundException;
+import you_tube.tag.dto.TagShortInfo;
+import you_tube.tag.entity.TagEntity;
 import you_tube.tag.service.TagService;
 import you_tube.video.VideoEntity;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -60,5 +64,13 @@ public class VideoTagService {
             throw new ResourceNotFoundException(resourceBundleService.getMessage("videos.not.found",lang));
         }
         return videos.get().toList();
+    }
+
+    public List<TagShortInfo> tags(String videoId){
+        List<TagEntity> tagEntities = videoTagRepository.getTagsByVideoId(videoId);
+        if(tagEntities.isEmpty()){
+            return Collections.emptyList();
+        }
+        return tagEntities.stream().map(item -> tagService.getDTO(item.getId())).toList();
     }
 }

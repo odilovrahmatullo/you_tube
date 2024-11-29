@@ -9,16 +9,21 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import you_tube.attach.service.AttachService;
+import you_tube.category.service.CategoryService;
 import you_tube.channel.ChannelService;
 import you_tube.config.CustomUserDetails;
 import you_tube.exceptionhandler.AppBadRequest;
-import you_tube.playlist.service.PlaylistService;
+import you_tube.exceptionhandler.AuthBadException;
+import you_tube.exceptionhandler.ResourceNotFoundException;
 import you_tube.playlistvideo.service.PlaylistVideoService;
 import you_tube.profile.dto.GetProfileDTO;
-import you_tube.profile.service.ProfileService;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.video_like.service.LikeService;
 import you_tube.videotag.VideoTagService;
 import you_tube.videowatched.service.VideoWatchedService;
 
@@ -41,12 +46,14 @@ public class VideoService {
     private VideoWatchedService videoWatchedService;
     @Autowired
     private VideoTagService videoTagService;
-    @Autowired
-    private PlaylistService playlistService;
+
     @Autowired
     private PlaylistVideoService playlistVideoService;
     @Autowired
-    private ProfileService profileService;
+    private CategoryService categoryService;
+    @Autowired
+    private LikeService likeService;
+
 
     public VideoDTO create(VideoDTO dto) {
         VideoEntity entity = new VideoEntity();
@@ -176,7 +183,7 @@ public class VideoService {
         Pageable pageable = PageRequest.of(page, size);
         Page<VideoEntity> videoEntities = videoRepository.findAllByVisibleTrue(pageable);
         List<VideoMixDTO> videoMixDTOS = videoEntities.stream().map(item -> mapperToMix(item)).toList();
-        return new PageImpl<>(videoMixDTOS,pageable,videoEntities.getTotalPages());
+        return new PageImpl<>(videoMixDTOS, pageable, videoEntities.getTotalPages());
     }
 
     public VideoMixDTO mapperToMix(VideoEntity entity) {
@@ -192,13 +199,13 @@ public class VideoService {
     }
 
     public PageImpl<VideoPlayListInfoDTO> getChannelList(Integer page, Integer size, String channelId) {
-        Pageable pageable = PageRequest.of(page,size);
-        Page<VideoEntity> videoEntities = videoRepository.getVideosByChannelId(channelId,pageable);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<VideoEntity> videoEntities = videoRepository.getVideosByChannelId(channelId, pageable);
         List<VideoPlayListInfoDTO> results = videoEntities.stream().map(item -> mapperToVideoPlayList(item)).toList();
-        return new PageImpl<>(results,pageable,videoEntities.getTotalPages());
+        return new PageImpl<>(results, pageable, videoEntities.getTotalPages());
     }
 
-    public VideoPlayListInfoDTO mapperToVideoPlayList(VideoEntity entity){
+    public VideoPlayListInfoDTO mapperToVideoPlayList(VideoEntity entity) {
         VideoPlayListInfoDTO dto = new VideoPlayListInfoDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
@@ -207,4 +214,47 @@ public class VideoService {
         dto.setPublishedDate(entity.getPublishedDate());
         return dto;
     }
+
+    public VideoFullInfoDTO getById(String videoId) {
+        VideoEntity video = videoRepository.findById(videoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Video not found"));
+
+        if (video.getVideoStatus().equals(VideoStatus.PRIVATE)) {
+            return checkRole(video);
+        }
+        else {
+            return getFullInfoVideo(video);
+        }
+    }
+
+    public VideoFullInfoDTO checkRole(VideoEntity video) {
+        CustomUserDetails user = SpringSecurityUtil.getCurrentUser();
+        boolean isOwner = video.getChannel().getProfile().getId().equals(user.getId());
+        boolean isAdmin = user.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        if (!isOwner && !isAdmin) {
+            throw new AccessDeniedException("You are not authorized to access this private video.");
+        }
+        return getFullInfoVideo(video);
+    }
+
+    public VideoFullInfoDTO getFullInfoVideo(VideoEntity entity) {
+        VideoFullInfoDTO dto = new VideoFullInfoDTO();
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setDescription(entity.getDescription());
+        dto.setPreviewAttach(attachService.getDTO(entity.getPreviewAttachId()));
+        dto.setAttach(attachService.getDTO(entity.getAttachId()));
+        dto.setChannel(channelService.getInfo(entity.getChannelId()));
+        dto.setCategory(categoryService.getDTO(entity.getCategoryId()));
+        dto.setTag(videoTagService.tags(entity.getId()));
+        dto.setLike(likeService.getLikeInfo(entity.getId()));
+        dto.setSharedCount(entity.getSharedCount());
+        dto.setViewCount(entity.getViewCount());
+        dto.setPublishedDate(entity.getPublishedDate());
+        return dto;
+
+    }
+
+
 }

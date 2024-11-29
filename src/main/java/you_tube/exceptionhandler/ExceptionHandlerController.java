@@ -57,4 +57,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
                 .body("Access Denied: You do not have permission to access this resource");
     }
 
+    @ExceptionHandler(AuthBadException.class)
+    public ResponseEntity<?> illegalArgument(AuthBadException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+
+
 }

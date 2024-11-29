@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import you_tube.config.CustomUserDetails;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.video_like.dto.LikeInfoDTO;
 import you_tube.video.VideoEntity;
 import you_tube.video.VideoRepository;
 import you_tube.video_like.dto.ChannelDTO;
@@ -16,7 +17,6 @@ import you_tube.video_like.enums.LikeType;
 import you_tube.video_like.repository.LikeRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -103,4 +103,7 @@ public class LikeService {
         return dto;
     }
 
+    public LikeInfoDTO getLikeInfo(String videoId) {
+        CustomUserDetails user = SpringSecurityUtil.getCurrentUser();
+        return likeRepository.getLikeInfo(videoId,user.getId());}
 }

@@ -75,4 +75,11 @@ public class VideoController {
         page = Math.max(page-1,0);
         return ResponseEntity.ok(videoService.getChannelList(page,size,channelId));
     }
+
+    @GetMapping("/{videoId}")
+    public ResponseEntity<VideoFullInfoDTO> getById(@PathVariable String videoId){
+        return ResponseEntity.ok(videoService.getById(videoId));
+    }
+
+
 }
