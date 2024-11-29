@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -31,7 +32,7 @@ public class SpringSecurityConfig {
 
     public static final String [] AUTH_WHITELIST = {
             "/api/auth/login", "video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**",
-            "video/channel/**"
+            "video/channel/**","attach/**","/api/playlist/**","/api/email/confirm/**"
     };
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -48,10 +49,7 @@ public class SpringSecurityConfig {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers(AUTH_WHITELIST).permitAll()
-                    .requestMatchers("attach/**").permitAll()
-                    .requestMatchers("/api/playlist/**").permitAll()
-                    .requestMatchers("/api/email/confirm/**").permitAll()
-
+                    .requestMatchers(HttpMethod.GET, "video/*").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

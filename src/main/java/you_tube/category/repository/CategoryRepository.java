@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends CrudRepository<CategoryEntity, Integer> {
 
-    @Query("from TagEntity where id=?1 and visible = true")
+    @Query("from CategoryEntity where id=?1 and visible = true")
     CategoryEntity findByIdAndVisibleTrue(int id);
 
 

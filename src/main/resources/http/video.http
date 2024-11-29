@@ -48,3 +48,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6I
 
 ### GET channel videos
 GET localhost:8080/video/channel/d6142e7c-7876-455d-b4c8-a3e916b31711/videos?page=1&size=1
+
+### GET BY Id (FULL information)
+GET localhost:8080/video/530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4
+#moderator Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9NT0RFUkFUT1IiLCJzdWIiOiJtb2RlcmF0b3JAZ21haWwuY29tIiwiaWF0IjoxNzMyODgwOTM0LCJleHAiOjE3MzI5NjczMzR9.czQI_P9uY9Mhi3NST1NACifUtHGbfB8f4XOdu0HgulE
+#user or owner Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI4ODA4ODgsImV4cCI6MTczMjk2NzI4OH0.C8NDAGKr9zh_nih-95n2lGU7lBUM4i6-Y5gakiq6P3g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjg3ODQzNywiZXhwIjoxNzMyOTY0ODM3fQ.xX51QOxTnmu18YVP0D_7cTCgArhvcwe1u-PBqcNdB60
