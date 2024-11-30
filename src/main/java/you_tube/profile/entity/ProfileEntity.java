@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import you_tube.channel.ChannelEntity;
 import you_tube.profile.enums.ProfileRole;
 import you_tube.profile.enums.ProfileStatus;
 

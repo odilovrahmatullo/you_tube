@@ -2,14 +2,13 @@ package you_tube.playlistvideo.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import you_tube.playlist.dto.PlayListInfoDTO;
 import you_tube.playlist.dto.PlayListShortInfoDTO;
 import you_tube.playlistvideo.dto.PlaylistVideoDTO;
 import you_tube.playlistvideo.entity.PlaylistVideoEntity;
 import you_tube.playlistvideo.repository.PlaylistVideoRepository;
 import you_tube.exceptionhandler.AppBadException;
-import you_tube.video.VideoDTO;
-import you_tube.video.VideoEntity;
+import you_tube.video.dto.VideoDTO;
+import you_tube.video.entity.VideoEntity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

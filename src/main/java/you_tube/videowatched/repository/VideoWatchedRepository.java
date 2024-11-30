@@ -3,7 +3,7 @@ package you_tube.videowatched.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import you_tube.video.VideoEntity;
+import you_tube.video.entity.VideoEntity;
 import you_tube.videowatched.entity.VideoWatchedEntity;
 
 import java.util.List;
