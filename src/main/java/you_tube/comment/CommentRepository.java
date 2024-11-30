@@ -10,8 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CommentRepository extends CrudRepository<CommentEntity,Integer>,
                                            PagingAndSortingRepository<CommentEntity,Integer> {
-    @Query("FROM CommentEntity as c where c.id = ?1 and c.profileId = ?2 and c.videoId = ?3 and c.visible = true ")
-    CommentEntity isBelong(Integer commentId, Integer userId,String videoId);
+    @Query("FROM CommentEntity as c where c.id = ?1 and c.profileId = ?2 and c.visible = true ")
+    CommentEntity isBelong(Integer commentId, Integer userId);
 
     @Modifying
     @Transactional

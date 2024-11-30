@@ -45,15 +45,15 @@ public class CommentService {
 
     public String update(Integer commentId, CommentDTO dto) {
         CustomUserDetails user = SpringSecurityUtil.getCurrentUser();
-        CommentEntity commentEntity = isOwner(commentId,user, dto.getVideoId());
+        CommentEntity commentEntity = isOwner(commentId,user);
         commentEntity.setContent(dto.getContent());
         commentEntity.setUpdateDate(LocalDateTime.now());
         commentRepository.save(commentEntity);
         return "UPDATED 1";
     }
 
-    private CommentEntity isOwner(Integer commentId, CustomUserDetails user,String videoId) {
-        CommentEntity comment = commentRepository.isBelong(commentId,user.getId(),videoId);
+    private CommentEntity isOwner(Integer commentId, CustomUserDetails user) {
+        CommentEntity comment = commentRepository.isBelong(commentId,user.getId());
         if(comment!=null){
             return comment;
         }
@@ -61,7 +61,10 @@ public class CommentService {
     }
 
     public String delete(Integer commentId) {
-        return "DELETED "+commentRepository.deleteComment(commentId);
+        CommentEntity comment = isOwner(commentId,SpringSecurityUtil.getCurrentUser());
+        comment.setVisible(Boolean.FALSE);
+        commentRepository.save(comment);
+        return "DELETED 1";
     }
 
 
