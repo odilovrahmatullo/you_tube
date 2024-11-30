@@ -30,4 +30,13 @@ public class CommentController {
         return ResponseEntity.ok(commentService.delete(commentId));
     }
 
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getByPagination(@RequestParam Integer page,
+                                             @RequestParam Integer size){
+        page = Math.max(page-1,0);
+        return ResponseEntity.ok(commentService.getAll(page,size));
+    }
+
+
 }

@@ -26,3 +26,7 @@ Content-Type: application/json
 ### delete comment
 PUT localhost:8080/comment/delete/5
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoib2RpbG92cmFobWF0dWxsbzRAZ21haWwuY29tIiwiaWF0IjoxNzMyOTYxOTkyLCJleHAiOjE3MzMwNDgzOTJ9.XSXR-uf8mPdcKRTLgwaAW1Wp8ytu4Lpl-wk2R62RtMg
+
+### Get all comments
+GET localhost:8080/comment/all?page=1&size=5
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjk1OTY4OSwiZXhwIjoxNzMzMDQ2MDg5fQ.fWjxRGzsuzqcbSHazjhivVe4qyh6Ei6Y_9TTnSZoHk0

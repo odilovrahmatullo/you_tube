@@ -2,6 +2,10 @@ package you_tube.comment;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import you_tube.profile.entity.ProfileEntity;
@@ -10,6 +14,7 @@ import you_tube.security.CustomUserDetails;
 import you_tube.utils.SpringSecurityUtil;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -60,4 +65,25 @@ public class CommentService {
     }
 
 
+    public Page<CommentDTO> getAll(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<CommentEntity> pageList = commentRepository.getAllComments(pageable);
+        List<CommentDTO> dtoList = pageList.stream().map(item -> toDTO(item)).toList();
+        return new PageImpl<>(dtoList,pageable,pageList.getTotalPages());
+    }
+
+    public CommentDTO toDTO(CommentEntity entity){
+        CommentDTO dto = new CommentDTO();
+        dto.setId(entity.getId());
+        dto.setContent(entity.getContent());
+        dto.setProfile(profileService.toShortDTO(entity.getProfile()));
+        dto.setVideoId(entity.getVideoId());
+        if(entity.getReplyId()!=null) {
+            dto.setReplyId(entity.getReplyId());
+            dto.setUpdateDate(entity.getUpdateDate());
+        }
+        dto.setCreatedDate(entity.getCreatedDate());
+
+        return dto;
+    }
 }
