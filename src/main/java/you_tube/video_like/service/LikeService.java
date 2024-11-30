@@ -2,12 +2,12 @@ package you_tube.video_like.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import you_tube.config.CustomUserDetails;
+import you_tube.security.CustomUserDetails;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.utils.SpringSecurityUtil;
 import you_tube.video_like.dto.LikeInfoDTO;
-import you_tube.video.VideoEntity;
-import you_tube.video.VideoRepository;
+import you_tube.video.entity.VideoEntity;
+import you_tube.video.repository.VideoRepository;
 import you_tube.video_like.dto.ChannelDTO;
 import you_tube.video_like.dto.LikeDTO;
 import you_tube.video_like.dto.VideoLikeInfoDTO;

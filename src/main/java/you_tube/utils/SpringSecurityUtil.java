@@ -2,8 +2,7 @@ package you_tube.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import you_tube.config.CustomUserDetails;
-import you_tube.exceptionhandler.AppBadRequest;
+import you_tube.security.CustomUserDetails;
 import you_tube.exceptionhandler.AuthBadException;
 
 public class SpringSecurityUtil {

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import you_tube.profile.entity.ProfileEntity;
-import you_tube.video.VideoEntity;
+import you_tube.video.entity.VideoEntity;
 import you_tube.video_like.enums.LikeType;
 
 import java.time.LocalDateTime;

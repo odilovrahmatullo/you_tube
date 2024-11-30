@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import you_tube.playlist.dto.PlayListShortInfoDTO;
 import you_tube.playlistvideo.entity.PlaylistVideoEntity;
-import you_tube.video.VideoEntity;
+import you_tube.video.entity.VideoEntity;
 
 import java.util.List;
 

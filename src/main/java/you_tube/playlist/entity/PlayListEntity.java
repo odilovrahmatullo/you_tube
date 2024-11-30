@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import you_tube.playlist.enums.PlaylistStatus;
-import you_tube.channel.ChannelEntity;
+import you_tube.channel.entity.ChannelEntity;
 
 import java.time.LocalDate;
 

@@ -3,7 +3,7 @@ package you_tube.playlist.dto;
 import lombok.Getter;
 import lombok.Setter;
 import you_tube.playlist.enums.PlaylistStatus;
-import you_tube.channel.ChannelEntity;
+import you_tube.channel.entity.ChannelEntity;
 import you_tube.profile.dto.GetProfileDTO;
 
 @Getter
