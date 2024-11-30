@@ -24,4 +24,10 @@ public class CommentController {
         return ResponseEntity.ok(commentService.update(commentId,dto));
     }
 
+    @PutMapping("/delete/{commentId}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<?> delete(@PathVariable Integer commentId){
+        return ResponseEntity.ok(commentService.delete(commentId));
+    }
+
 }

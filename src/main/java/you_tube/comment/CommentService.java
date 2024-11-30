@@ -54,4 +54,10 @@ public class CommentService {
         }
         throw new AccessDeniedException("You don't have access to update this comment ");
     }
+
+    public String delete(Integer commentId) {
+        return "DELETED "+commentRepository.deleteComment(commentId);
+    }
+
+
 }
