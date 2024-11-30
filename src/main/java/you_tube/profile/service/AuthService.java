@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import you_tube.exceptionhandler.AppBadException;
+import you_tube.history.service.EmailHistoryService;
 import you_tube.history.service.EmailSendingService;
 import you_tube.profile.dto.AuthDTO;
 import you_tube.profile.dto.ProfileDTO;
@@ -25,24 +26,28 @@ public class AuthService {
     private ProfileRepository profileRepository;
     @Autowired
     private EmailSendingService emailSendingService;
+    @Autowired
+    private EmailHistoryService emailHistoryService;
     @Value("${server.domain}")
     private String domainName;
 
     public String create(RegistrationDTO registration) {
         ProfileEntity byEmail = profileRepository.findByEmail(registration.getEmail());
         if (byEmail != null) {
-            throw new RuntimeException("Email already exists");
+            throw new AppBadException("Email already exists");
+        } else  {
+            ProfileEntity profileEntity = ConvertDTOToEntity(registration);
+            StringBuilder sb = new StringBuilder();
+            sb.append("<h1 style=\"text-align: center\"> Complete Registration</h1>");
+            sb.append("<br>");
+            sb.append("<p>Click the link below to complete registration</p>\n");
+            sb.append("<p><a style=\"padding: 5px; background-color: indianred; color: white\"  href=\"http://localhost:8080/api/auth/registration/confirm/")
+                    .append(profileEntity.getId()).append("\" target=\"_blank\">Click Th</a></p>\n");
+            emailHistoryService.addEmailHistory(registration.getEmail(), String.valueOf(sb),LocalDateTime.now());
+            emailSendingService.sendSimpleMessage(registration.getEmail(), "Complite Registration", getConfirmationButton(profileEntity.getId()));
+            emailSendingService.sendMimeMessage(registration.getEmail(), "Tasdiqlash",getConfirmationButton(profileEntity.getId()));
+            return "Confirm sent email";
         }
-        ProfileEntity profileEntity = ConvertDTOToEntity(registration);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<h1 style=\"text-align: center\"> Complete Registration</h1>");
-        sb.append("<br>");
-        sb.append("<p>Click the link below to complete registration</p>\n");
-        sb.append("<p><a style=\"padding: 5px; background-color: indianred; color: white\"  href=\"http://localhost:8080/api/auth/registration/confirm/")
-                .append(profileEntity.getId()).append("\" target=\"_blank\">Click Th</a></p>\n");
-        emailSendingService.sendSimpleMessage(registration.getEmail(), "Complite Registration", getConfirmationButton(profileEntity.getId()));
-        emailSendingService.sendMimeMessage(registration.getEmail(), "Tasdiqlash",getConfirmationButton(profileEntity.getId()));
-        return "Confirm sent email";
     }
 
     private ProfileEntity ConvertDTOToEntity(RegistrationDTO registration) {

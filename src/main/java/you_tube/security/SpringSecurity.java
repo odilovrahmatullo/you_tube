@@ -27,7 +27,7 @@ public class SpringSecurity {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     public static final String [] AUTH_WHITELIST = {
-            "/api/auth/login", "video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**",
+            "/api/auth/login","/api/auth/registration","video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**",
             "video/channel/**","attach/**","/api/playlist/**","/api/email/confirm/**"
     };
     @Bean

@@ -1,0 +1,2 @@
+###  GET email
+GET localhost:8080/api/email-history/email/odilovrahmatullo63@gmail.com
