@@ -29,9 +29,25 @@ public class SpringSecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public static final String [] AUTH_WHITELIST = {
-            "/api/auth/login", "video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**"
+    public static final String[] AUTH_WHITELIST = {
+            "/api/auth/login",
+            "video/view-count/*",
+            "video/title/*",
+            "video/byCategory/*",
+            "video/tag/*",
+            "/video-tag/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html"
     };
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -55,11 +71,12 @@ public class SpringSecurityConfig {
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        http.csrf(AbstractHttpConfigurer :: disable); // csrf ochirilgan
-        http.cors(AbstractHttpConfigurer :: disable); // cors ochirilgan
+        http.csrf(AbstractHttpConfigurer::disable); // csrf ochirilgan
+        http.cors(AbstractHttpConfigurer::disable); // cors ochirilgan
 
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new PasswordEncoder() {
