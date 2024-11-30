@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import you_tube.profile.entity.ProfileEntity;
-import you_tube.video.VideoEntity;
+import you_tube.video.entity.VideoEntity;
 import you_tube.video_like.enums.LikeType;
 
 import java.time.LocalDateTime;
@@ -34,5 +34,6 @@ public class LikeEntity {
     @Column(name = "create_date")
     private LocalDateTime createdDate;
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private LikeType type;
 }

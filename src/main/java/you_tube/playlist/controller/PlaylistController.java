@@ -22,7 +22,7 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/create/")
     @Operation(summary = "Api for playlist", description = "Admin creates playlist for channel")
     public ResponseEntity<?> createPlaylist(@RequestBody @Valid CreatePlaylistDTO dto){
@@ -30,7 +30,6 @@ public class PlaylistController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Api for playlist", description = "Admin updates playlist information")
     public ResponseEntity<?> updatePlaylist(@PathVariable Integer id,
                                             @RequestBody @Valid UpdateDTO dto){
@@ -38,20 +37,18 @@ public class PlaylistController {
     }
 
     @PutMapping("/change-status/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Api for playlist", description = "Playlist status for channel: private and channel, (playlist_id)")
     public ResponseEntity<?> changeStatus(@PathVariable Integer id,
                                           @RequestBody @NotBlank PlaylistStatus status){
         return ResponseEntity.ok(playlistService.updateStatus(id,status));
     }
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Api for playlist", description = "Playlist delete by playlid_id")
     public ResponseEntity<?> deletePlaylist(@PathVariable Integer id){
         return ResponseEntity.ok(playlistService.deleted(id));
     }
 
-    @GetMapping("/all-playlist/")
+    @GetMapping("/all-playlist")
     @Operation(summary = "Api for playlist", description = "Shows all playlists")
     private ResponseEntity<?> pagination(@RequestParam(value = "page", defaultValue = "1") int page,
                                          @RequestParam(value = "size", defaultValue = "10") int size) {

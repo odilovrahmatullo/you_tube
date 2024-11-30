@@ -2,6 +2,7 @@ package you_tube.playlist.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,8 @@ public interface PlaylistRepository extends JpaRepository<PlayListEntity, Intege
     @Query("UPDATE PlayListEntity p SET p.visible = false WHERE p.id = ?1")
     int deletedVisible(Integer id);
 
-    @Query("FROM PlayListEntity s ")
-    Page<PlayListEntity> getAll6(PageRequest pageRequest);
+    @Query("SELECT p FROM PlayListEntity p " +
+            "JOIN FETCH p.channel c " +
+            "JOIN FETCH c.profile pr")
+    Page<PlayListEntity> getAll6(Pageable pageable);
 }

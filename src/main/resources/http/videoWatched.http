@@ -1,1 +1,10 @@
-###
+### Create
+POST localhost:8080/api/video-like/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI3OTc5MjAsImV4cCI6MTczMjg4NDMyMH0.xUFufeIwD4shcTc7-HMbs8VZ1137u6HJaPNLWVHm7yM
+
+{
+  "video_id": "39526a43-cb60-43fb-94dd-1aee27dfac74.mp4"
+}
+
+

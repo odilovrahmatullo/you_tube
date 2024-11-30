@@ -1,14 +1,13 @@
 ### Create channel (RoleUser)
 POST localhost:8080/channel
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI3MjExMDcsImV4cCI6MTczMjgwNzUwN30.DAzc0JxmfL5x3nQW995YwEar9aDobWU9Gi7sFkR2bnk
-#admin##Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjcyMjA4MywiZXhwIjoxNzMyODA4NDgzfQ.O1snDQ31F2bRazAKVfNKaNegtfnuH8QyTClwit6-G1s
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI3OTc5MjAsImV4cCI6MTczMjg4NDMyMH0.xUFufeIwD4shcTc7-HMbs8VZ1137u6HJaPNLWVHm7yM
 
 {
   "name": "odilov",
   "description": "zo'r kanal bu qoling chiqib ketmang",
-  "bannerId": "35950f14-a106-42a2-a32b-a9618b8da610.jpg",
-  "photoId": "35950f14-a106-42a2-a32b-a9618b8da610.jpg"
+  "bannerId": "b4591845-1272-461d-be03-61487a33726d.jpg",
+  "photoId": "b4591845-1272-461d-be03-61487a33726d.jpg"
 
 }
 

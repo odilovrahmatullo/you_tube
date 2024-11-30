@@ -6,7 +6,7 @@ Content-Type: application/json
   "name": "Odilov",
   "surname": "Rahmatullo",
   "password": "12345678",
-  "email": "odilovrahmatullo4@gmail.com"
+  "email": "odilovrahmatullo6@gmail.com"
 }
 
 ### Login
@@ -14,6 +14,6 @@ POST localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin@gmail.com",
+  "email": "moderator@gmail.com",
   "password": "12345678"
 }
