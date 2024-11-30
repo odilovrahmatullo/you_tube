@@ -3,6 +3,7 @@ package you_tube.profile.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import you_tube.attach.service.AttachService;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.history.service.EmailHistoryService;
 import you_tube.history.service.EmailSendingService;
@@ -29,6 +30,8 @@ public class ProfileService {
     private String updateEmail ;
     @Value("${server.domain}")
     private String domainName;
+    @Autowired
+    private AttachService attachService;
 
     public ProfileDTO create(CreateProfile profile) {
         ProfileEntity byEmail = profileRepository.findByEmail(profile.getEmail());
@@ -107,6 +110,15 @@ public class ProfileService {
                 " #007bff; color: white; text-decoration: none; border-radius: 5px; border: " +
                 "1px solid #007bff;\">Confirm</a> </body></html>";
 
+    }
+
+    public ProfileDTO toShortDTO (ProfileEntity entity){
+        ProfileDTO profileDTO = new ProfileDTO();
+        profileDTO.setName(entity.getName());
+        profileDTO.setSurname(entity.getSurname());
+        profileDTO.setPhotoInDTO(attachService.getDTO(entity.getPhoto()));
+
+        return profileDTO;
     }
 
 

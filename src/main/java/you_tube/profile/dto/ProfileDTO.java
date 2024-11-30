@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import you_tube.attach.dtos.AttachDTO;
+import you_tube.attach.dtos.AttachSimpleDTO;
 import you_tube.profile.enums.ProfileRole;
 import you_tube.profile.enums.ProfileStatus;
 
@@ -29,6 +31,7 @@ public class ProfileDTO {
     @NotBlank(message = "Password not found")
     private String password;
     private String photo;
+    private AttachSimpleDTO photoInDTO;
     private ProfileStatus status;
     private ProfileRole role;
     private String JwtToken;

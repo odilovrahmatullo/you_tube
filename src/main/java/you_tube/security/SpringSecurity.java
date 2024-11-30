@@ -30,6 +30,9 @@ public class SpringSecurity {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+
+    public static final String [] AUTH_WHITELIST = {
+            "/api/auth/**", "video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**",
     public static final String[] AUTH_WHITELIST = {
             "/api/auth/login",
             "video/view-count/*",
