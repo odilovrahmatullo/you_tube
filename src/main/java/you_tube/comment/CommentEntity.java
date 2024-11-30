@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -33,7 +33,7 @@ public class CommentEntity {
     private VideoEntity video;
 
     @Column(name = "reply_id")
-    private String replyId;
+    private Integer replyId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reply_id",insertable = false, updatable = false)
     private CommentEntity reply;
