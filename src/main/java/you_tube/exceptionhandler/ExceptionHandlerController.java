@@ -51,10 +51,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> illegalArgument(ResourceNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body("Access Denied: You do not have permission to access this resource");
+        String message = ex.getMessage() != null ? ex.getMessage() : "Access Denied: You do not have permission to access this resource";
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(message);
     }
 
     @ExceptionHandler(AuthBadException.class)

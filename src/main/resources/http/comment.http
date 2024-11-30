@@ -11,3 +11,15 @@ Content-Type: application/json
   "replyId": 1
 
 }
+
+### update comment
+PUT localhost:8080/comment/4
+#fakeuser Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzI5NTk3NDgsImV4cCI6MTczMzA0NjE0OH0.a_LH5u7Z2VP9SoeUM-EAj9MrhVvy49kVIetOPg1lcak
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoib2RpbG92cmFobWF0dWxsbzRAZ21haWwuY29tIiwiaWF0IjoxNzMyOTYxOTkyLCJleHAiOjE3MzMwNDgzOTJ9.XSXR-uf8mPdcKRTLgwaAW1Wp8ytu4Lpl-wk2R62RtMg
+#admin Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMjk1OTY4OSwiZXhwIjoxNzMzMDQ2MDg5fQ.fWjxRGzsuzqcbSHazjhivVe4qyh6Ei6Y_9TTnSZoHk0
+Content-Type: application/json
+
+{
+  "content": "da nimasini etasan jigar",
+  "videoId": "530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4"
+}
