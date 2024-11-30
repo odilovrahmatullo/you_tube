@@ -1,5 +1,7 @@
 package you_tube.video_like.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,28 +11,33 @@ import you_tube.video_like.service.LikeService;
 
 @RestController
 @RequestMapping("/api/video-like")
+@Tag(name = "Like controller", description = "Like and dislike")
 public class LikeController {
     @Autowired
     private LikeService likeService;
 // USER
     @PostMapping("/")
+    @Operation(summary = "Api for like", description = "This api for create like")
     public ResponseEntity<?> createLike(@RequestBody LikeDTO dto,
                                         @RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(likeService.createLike(dto));
     }
 //  USER
     @PutMapping("/{id}")
+    @Operation(summary = "Api for like", description = "This api for delete like, (id)")
     public ResponseEntity<?> deleteLike(@PathVariable String id) {
         return ResponseEntity.ok(likeService.deleteLike(id));
     }
 // USER
     @GetMapping("/")
+    @Operation(summary = "Api for like", description = "This api for get like")
     public ResponseEntity<?> getLike(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok(likeService.getAllLike());
     }
 
 //    ADMIN
     @GetMapping("/admin/{id}")
+    @Operation(summary = "Api for like", description = "This api for get all like")
     public ResponseEntity<?> getAllLike(@PathVariable Integer id) {
         return ResponseEntity.ok(likeService.getAllAdminVideoLike(id));
     }
