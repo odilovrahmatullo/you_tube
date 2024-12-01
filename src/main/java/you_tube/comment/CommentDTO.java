@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import you_tube.profile.dto.GetProfileDTO;
 import you_tube.profile.dto.ProfileDTO;
 import you_tube.profile.entity.ProfileEntity;
 import you_tube.video.dto.VideoDTO;
@@ -21,7 +22,7 @@ public class CommentDTO {
     @NotNull(message = "content is required")
     private String content;
     private Integer profileId;
-    private ProfileDTO profile;
+    private GetProfileDTO profile;
     @NotNull(message = "videoId is required")
     private String videoId;
     private VideoDTO video;

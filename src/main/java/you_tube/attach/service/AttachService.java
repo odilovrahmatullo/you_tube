@@ -210,5 +210,8 @@ public class AttachService {
         return dto;
     }
 
+    public String getOriginName(String id) {
+        return attachRepository.getOriginName(id);
+    }
 }
 

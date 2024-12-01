@@ -258,4 +258,13 @@ public class VideoService {
     }
 
 
+    public VideoSimpleDTO getDTO(VideoEntity video) {
+        VideoSimpleDTO dto = new VideoSimpleDTO();
+        dto.setId(video.getId());
+        dto.setTitle(video.getTitle());
+        dto.setName(attachService.getOriginName(video.getId()));
+        dto.setPreviewAttach(attachService.getDTO(video.getPreviewAttachId()));
+        return dto;
+
+    }
 }

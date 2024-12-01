@@ -38,5 +38,11 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getAll(page,size));
     }
 
+    @GetMapping("by-profile/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getByProfileId(@PathVariable Integer id){
+        return ResponseEntity.ok(commentService.getByProfileId(id));
+    }
+
 
 }

@@ -107,11 +107,12 @@ public class ProfileService {
 
     }
 
-    public ProfileDTO toShortDTO (ProfileEntity entity){
-        ProfileDTO profileDTO = new ProfileDTO();
+    public GetProfileDTO toShortDTO (ProfileEntity entity){
+        GetProfileDTO profileDTO = new GetProfileDTO();
+        profileDTO.setId(entity.getId());
         profileDTO.setName(entity.getName());
         profileDTO.setSurname(entity.getSurname());
-        profileDTO.setPhotoInDTO(attachService.getDTO(entity.getPhoto()));
+        profileDTO.setAttach(attachService.getDTO(entity.getPhoto()));
 
         return profileDTO;
     }
