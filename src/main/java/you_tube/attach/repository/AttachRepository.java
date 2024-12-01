@@ -24,4 +24,7 @@ public interface AttachRepository extends CrudRepository<AttachEntity, String>,
 
     @Query("from AttachEntity where visible = true")
     Page<AttachEntity> getAll(Pageable pageable);
+
+    @Query("SELECT originName FROM AttachEntity where id = ?1")
+    String getOriginName(String id);
 }

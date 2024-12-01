@@ -8,10 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import you_tube.profile.entity.ProfileEntity;
 import you_tube.profile.service.ProfileService;
 import you_tube.security.CustomUserDetails;
 import you_tube.utils.SpringSecurityUtil;
+import you_tube.video.service.VideoService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +22,8 @@ public class CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private VideoService videoService;
 
     @Transactional
     public CommentDTO create(CommentDTO dto) {
@@ -45,15 +47,15 @@ public class CommentService {
 
     public String update(Integer commentId, CommentDTO dto) {
         CustomUserDetails user = SpringSecurityUtil.getCurrentUser();
-        CommentEntity commentEntity = isOwner(commentId,user, dto.getVideoId());
+        CommentEntity commentEntity = isOwner(commentId,user);
         commentEntity.setContent(dto.getContent());
         commentEntity.setUpdateDate(LocalDateTime.now());
         commentRepository.save(commentEntity);
         return "UPDATED 1";
     }
 
-    private CommentEntity isOwner(Integer commentId, CustomUserDetails user,String videoId) {
-        CommentEntity comment = commentRepository.isBelong(commentId,user.getId(),videoId);
+    private CommentEntity isOwner(Integer commentId, CustomUserDetails user) {
+        CommentEntity comment = commentRepository.isBelong(commentId,user.getId());
         if(comment!=null){
             return comment;
         }
@@ -61,7 +63,10 @@ public class CommentService {
     }
 
     public String delete(Integer commentId) {
-        return "DELETED "+commentRepository.deleteComment(commentId);
+        CommentEntity comment = isOwner(commentId,SpringSecurityUtil.getCurrentUser());
+        comment.setVisible(Boolean.FALSE);
+        commentRepository.save(comment);
+        return "DELETED 1";
     }
 
 
@@ -84,6 +89,30 @@ public class CommentService {
         }
         dto.setCreatedDate(entity.getCreatedDate());
 
+        return dto;
+    }
+
+
+    public List<CommentInfoDTO> getByProfileId(Integer id) {
+        List<CommentEntity> profileCommentList = commentRepository.getByProfileId(id);
+        return profileCommentList.stream().map(item -> mapperTo(item)).toList();
+    }
+
+    private CommentInfoDTO mapperTo(CommentEntity entity){
+        CommentInfoDTO dto = new CommentInfoDTO();
+        dto.setId(entity.getId());
+        dto.setContent(entity.getContent());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setVideo(videoService.getDTO(entity.getVideo()));
+        return dto;
+    }
+
+    public CommentInfoDTO mapperToInfo(CommentEntity entity){
+        CommentInfoDTO dto = new CommentInfoDTO();
+        dto.setId(entity.getId());
+        dto.setContent(entity.getContent());
+        dto.setCreatedDate(entity.getCreatedDate());
+        dto.setProfile(profileService.toShortDTO(entity.getProfile()));
         return dto;
     }
 }
