@@ -1,5 +1,6 @@
 package you_tube.tag.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import you_tube.exceptionhandler.AppBadException;
 import you_tube.tag.dto.TagDTO;
 import you_tube.tag.service.TagService;
@@ -11,12 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/tag")
+@Tag(name = "Tag controller", description = "#music")
 public class TagController {
 
     @Autowired
     private TagService tagService;
 
     @PostMapping()
+
     public ResponseEntity<?> addCategory(@RequestBody TagDTO tagDTO) {
         TagDTO dto = tagService.craeteTag(tagDTO);
         return ResponseEntity.ok(dto);

@@ -1,5 +1,7 @@
 package you_tube.profile.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,13 @@ import you_tube.utils.JwtUtil;
 
 @RestController
 @RequestMapping("/api/profile")
+@Tag(name = "Profile controller", description = "User`s info")
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
     @PostMapping("/create")
+    @Operation(summary = "Api for profile", description = "This api to create a profile")
     public ResponseEntity<ProfileDTO> addProfile(@RequestBody @Valid CreateProfile requestDTO,
                                                  @RequestHeader("Authorization") String token) {
         System.out.println(token);
@@ -33,17 +37,20 @@ public class ProfileController {
     }
 
     @PutMapping("/update/email")
+    @Operation(summary = "Api for profile", description = "This api to update email")
     public ResponseEntity<?> UpdateEmail(@RequestBody String newEmail,
                                          @RequestHeader("Authorization") String token) {
         return ResponseEntity.status(201).body(profileService.updateEmailConfirm(newEmail, token));
     }
 
     @GetMapping("/email/confirm/{id}")
+    @Operation(summary = "Api for profile", description = "This api 'Please confirm the code sent to your email'.")
     public ResponseEntity<?> updateEmailConfirm(@PathVariable Integer id) {
         return ResponseEntity.ok(profileService.UpdateEmail(id));
     }
 
     @PutMapping("/update/")
+    @Operation(summary = "Api for profile", description = "This api profile`s info update")
     public ResponseEntity<?> UpdateProfile(@RequestBody @Valid UpdateProfileDTO updateProfileDTO,
                                             @RequestHeader("Authorization") String token) {
         JwtDTO dto = JwtUtil.decode(token.substring(7));
@@ -51,6 +58,7 @@ public class ProfileController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Api for profile", description = "This api find by profile, (profile_id)")
     public ResponseEntity<ProfileDTO> getProfile(@PathVariable Integer id) {
         return ResponseEntity.ok(profileService.getById(id));
     }

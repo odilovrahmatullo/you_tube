@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import you_tube.attach.service.AttachService;
 import you_tube.exceptionhandler.AppBadException;
+import you_tube.history.service.EmailHistoryService;
 import you_tube.history.service.EmailSendingService;
 import you_tube.profile.dto.*;
 import you_tube.profile.enums.ProfileStatus;
@@ -13,6 +14,7 @@ import you_tube.profile.entity.ProfileEntity;
 import you_tube.profile.repository.ProfileRepository;
 
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -22,6 +24,8 @@ public class ProfileService {
     private ProfileRepository profileRepository;
     @Autowired
     private EmailSendingService emailSendingService;
+    @Autowired
+    private EmailHistoryService emailHistoryService;
 
     private String updateEmail ;
     @Value("${server.domain}")
@@ -54,6 +58,7 @@ public class ProfileService {
         sb.append("<p>Click the link below to complete registration</p>\n");
         sb.append("<p><a style=\"padding: 5px; background-color: indianred; color: white\"  href=\"http://localhost:8080/api/profile/email/confirm/")
                 .append(byEmail.getId()).append("\" target=\"_blank\">Click Th</a></p>\n");
+        emailHistoryService.addEmailHistory(dto.getEmail(), String.valueOf(sb), LocalDateTime.now());
         emailSendingService.sendSimpleMessage(dto.getEmail(), "Complite Registration", getConfirmationButton(byEmail.getId()));
         emailSendingService.sendMimeMessage(dto.getEmail(), "Tasdiqlash", getConfirmationButton(byEmail.getId()));
         return "Confirm sent email";
