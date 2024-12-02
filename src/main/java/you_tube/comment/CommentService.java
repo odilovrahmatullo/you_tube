@@ -116,7 +116,7 @@ public class CommentService {
         return dto;
     }
 
-    public List<CommentInfoDTO>  getByOwnProfileId() {
+    public List<CommentInfoDTO>  getByOwnProfile() {
         List<CommentEntity> profileCommentList = commentRepository.getByProfileId(SpringSecurityUtil.getCurrentUserId());
         return profileCommentList.stream().map(item -> mapperTo(item)).toList();
     }
