@@ -50,5 +50,10 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getByOwnProfileId());
     }
 
+    @GetMapping("/by-video/{id}")
+    public ResponseEntity<?> getByVideoId(@PathVariable String id){
+        return ResponseEntity.ok(commentService.getByVideoId(id));
+    }
+
 
 }
