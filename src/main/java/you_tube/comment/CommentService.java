@@ -115,4 +115,20 @@ public class CommentService {
         dto.setProfile(profileService.toShortDTO(entity.getProfile()));
         return dto;
     }
+
+    public List<CommentInfoDTO>  getByOwnProfile() {
+        List<CommentEntity> profileCommentList = commentRepository.getByProfileId(SpringSecurityUtil.getCurrentUserId());
+        return profileCommentList.stream().map(item -> mapperTo(item)).toList();
+    }
+
+    public List<CommentInfoDTO> getByVideoId(String videoId) {
+        List<CommentEntity> videoCommentList = commentRepository.getByVideoId(videoId);
+        return videoCommentList.stream().map(item -> mapperToInfo(item)).toList();
+    }
+
+    public List<CommentInfoDTO> getByCommentId(Integer commentId) {
+        List<CommentEntity> commentList = commentRepository.getByCommentId(commentId);
+        return commentList.stream().map(item -> mapperToInfo(item)).toList();
+
+    }
 }

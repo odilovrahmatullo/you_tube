@@ -48,7 +48,7 @@ public class SpringSecurity {
             "/webjars/**",
             "/swagger-ui.html",
             "/api/auth/login","/api/auth/registration","/registration/confirm/*","video/view-count/*","video/title/*","video/byCategory/*","video/tag/*","/video-tag/**",
-            "video/channel/**","attach/**","/api/playlist/**","/api/email/confirm/**"
+            "video/channel/**","attach/**","/api/playlist/**","/api/email/confirm/**","comment/by-video/*","comment/by-comment/*"
     };
 
     @Bean
