@@ -21,4 +21,7 @@ public interface CommentRepository extends CrudRepository<CommentEntity,Integer>
 
     @Query("FROM CommentEntity where videoId = ?1 and visible = true ")
     List<CommentEntity> getByVideoId(String videoId);
+
+    @Query("FROM CommentEntity where replyId = ?1 and visible = true")
+    List<CommentEntity> getByCommentId(Integer commentId);
 }

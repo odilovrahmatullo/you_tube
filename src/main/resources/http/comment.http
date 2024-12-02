@@ -41,3 +41,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoid
 
 ### Get Comment List of video by videoId
 GET localhost:8080/comment/by-video/530e73e1-152c-4bb7-8d48-a9951a0d385e.mp4
+
+### Getting reply comments of comment
+GET localhost:8080/comment/by-comment/1

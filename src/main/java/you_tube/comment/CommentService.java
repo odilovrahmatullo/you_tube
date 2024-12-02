@@ -125,4 +125,10 @@ public class CommentService {
         List<CommentEntity> videoCommentList = commentRepository.getByVideoId(videoId);
         return videoCommentList.stream().map(item -> mapperToInfo(item)).toList();
     }
+
+    public List<CommentInfoDTO> getByCommentId(Integer commentId) {
+        List<CommentEntity> commentList = commentRepository.getByCommentId(commentId);
+        return commentList.stream().map(item -> mapperToInfo(item)).toList();
+
+    }
 }
