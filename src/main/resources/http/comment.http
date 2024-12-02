@@ -34,3 +34,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6I
 ### GET by profile Id (only ADMIN)
 GET localhost:8080/comment/by-profile/5
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTczMzA2Nzk4NCwiZXhwIjoxNzMzMTU0Mzg0fQ.DfIEoKkAWVoe-qDRqAjTNJOCtH_dJi8pNHwv0HW1PeA
+
+### Get by own profile id
+GET localhost:8080/comment/by-own-profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoidXNlckBnbWFpbC5jb20iLCJpYXQiOjE3MzMxMjI5NDUsImV4cCI6MTczMzIwOTM0NX0.wXlhOpY60rVwbRKSKl-KHAApjIl_c58elCV2F-KIYms
