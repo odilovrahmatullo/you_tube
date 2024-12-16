@@ -1,9 +1,12 @@
 package you_tube.subscription;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/subscribe")
@@ -28,6 +31,11 @@ public class SubscriptionController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<SubscriptionDTO> changeNotificationType(@RequestBody SubscriptionDTO dto){
         return ResponseEntity.ok(subscriptionService.changeNotificationType(dto));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<SubscriptionInfo>>getUserSubscriptionList() {
+        return ResponseEntity.ok(subscriptionService.getUserSubscriptionList());
     }
 
 }

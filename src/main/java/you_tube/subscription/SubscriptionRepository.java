@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface SubscriptionRepository extends CrudRepository<SubscriptionEntity,Integer> {
 
@@ -18,4 +19,7 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionEntit
     @Transactional
     @Query("update SubscriptionEntity Set type = ?2 where channelId = ?1 and profileId = ?3")
     void changeNotificationType(String channelId, NotificationType type, Integer currentUserId);
+
+    @Query("FROM SubscriptionEntity where profileId = ?1 and status = ?2")
+    List<SubscriptionEntity> getUserSubscriptionList(Integer currentUserId, SubscriptionStatus subscriptionStatus);
 }
