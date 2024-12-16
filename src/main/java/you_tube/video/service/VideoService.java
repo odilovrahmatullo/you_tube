@@ -74,6 +74,7 @@ public class VideoService {
         entity.setVisible(Boolean.TRUE);
         entity.setCreatedDate(LocalDateTime.now());
         videoRepository.save(entity);
+
         return dto;
     }
 
