@@ -17,10 +17,17 @@ public class SubscriptionController {
         return ResponseEntity.ok(subscriptionService.create(dto));
     }
 
-    @PutMapping
+    @PutMapping("/status")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<ChangeSubscriptionStatusDTO> changeStatus(@RequestBody ChangeSubscriptionStatusDTO dto){
         return ResponseEntity.ok(subscriptionService.changeStatus(dto));
+    }
+
+
+    @PutMapping("/notification")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<SubscriptionDTO> changeNotificationType(@RequestBody SubscriptionDTO dto){
+        return ResponseEntity.ok(subscriptionService.changeNotificationType(dto));
     }
 
 }

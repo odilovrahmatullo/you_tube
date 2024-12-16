@@ -13,4 +13,9 @@ public interface SubscriptionRepository extends CrudRepository<SubscriptionEntit
     @Transactional
     @Query("Update SubscriptionEntity Set status = ?2,unSubscribeDate = ?4 where channelId = ?1 and profileId = ?3")
     void changeStatus(String channelId, SubscriptionStatus status, Integer profileId, LocalDateTime now);
+
+    @Modifying
+    @Transactional
+    @Query("update SubscriptionEntity Set type = ?2 where channelId = ?1 and profileId = ?3")
+    void changeNotificationType(String channelId, NotificationType type, Integer currentUserId);
 }

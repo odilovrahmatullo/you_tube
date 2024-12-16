@@ -18,3 +18,13 @@ Content-Type: application/json
   "status": "ACTIVE"
 }
 
+### changing notification-type
+PUT localhost:8080/subscribe/notification
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9VU0VSIiwic3ViIjoib2RpbG92cmFobWF0dWxsbzRAZ21haWwuY29tIiwiaWF0IjoxNzM0MzMxMDk1LCJleHAiOjE3MzQ0MTc0OTV9.b42AShjJKohr584JeaDbGrMT5QfS7E12FmOOYOBr0Fg
+Content-Type: application/json
+
+{
+  "channelId": "d6142e7c-7876-455d-b4c8-a3e916b31711",
+  "type": "All"
+}
+

@@ -25,4 +25,9 @@ public class SubscriptionService {
         subscriptionRepository.changeStatus(dto.getChannelId(),dto.getStatus(),SpringSecurityUtil.getCurrentUserId(),LocalDateTime.now());
         return dto;
     }
+
+    public SubscriptionDTO changeNotificationType(SubscriptionDTO dto) {
+        subscriptionRepository.changeNotificationType(dto.getChannelId(),dto.getType(),SpringSecurityUtil.getCurrentUserId());
+        return dto;
+    }
 }
