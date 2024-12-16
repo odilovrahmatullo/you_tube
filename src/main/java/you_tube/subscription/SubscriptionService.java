@@ -20,4 +20,9 @@ public class SubscriptionService {
         subscriptionRepository.save(entity);
         return dto;
     }
+
+    public ChangeSubscriptionStatusDTO changeStatus(ChangeSubscriptionStatusDTO dto) {
+        subscriptionRepository.changeStatus(dto.getChannelId(),dto.getStatus(),SpringSecurityUtil.getCurrentUserId(),LocalDateTime.now());
+        return dto;
+    }
 }
